@@ -1,4 +1,6 @@
 ﻿
+; WARNING: Might not follow the standard !
+
 ; Source: http://www.purebasic.fr/english/viewtopic.php?t=38008
 
 Structure UUID4
@@ -24,6 +26,6 @@ Procedure.s GenerateGUIDv4()
 EndProcedure
 
 ; IDE Options = PureBasic 5.50 (Windows - x64)
-; CursorPosition = 7
+; CursorPosition = 1
 ; Folding = -
 ; EnableXP
