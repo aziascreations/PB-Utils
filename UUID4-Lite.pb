@@ -1,5 +1,5 @@
 ﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - UUID4                                 ║ v1.0.0 ║
+; ║ Purebasic Utils - UUID4 Lite                            ║ v1.0.0 ║
 ; ╠═════════════════════════════════════════════════════════╩════════╣
 ; ║                                                                  ║
 ; ║   ???                                                            ║
@@ -10,24 +10,6 @@
 ; ║ Source: http://www.purebasic.fr/english/viewtopic.php?t=38008    ║
 ; ╚══════════════════════════════════════════════════════════════════╝
 
-Enumeration Regex
-	#REGEX_ID_UUID4
-EndEnumeration
-
-Enumeration ErrorCode
-	#_ERR_REGEX_UUID4CreationFailure
-EndEnumeration
-
-#_REGEX_UUID4 = "^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$"
-
-Debug "Creation UUID4 regex..."
-If Not CreateRegularExpression(#REGEX_ID_UUID4, #_REGEX_UUID4)
-	Debug "Failed to create UUID4 regex !"
-	; TODO: Add a MessageRequester ?
-	End #_ERR_REGEX_UUID4CreationFailure
-EndIf
-
-; Returns a UUID4 as a String
 Procedure.s GenerateUUID4()
 	Dim _UUID4Bytes.b(16)
 	
