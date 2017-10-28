@@ -9,7 +9,7 @@
 ; ╚══════════════════════════════════════════════════════════════════╝
 
 Global PassedTests.i = 0
-Global FailedTests.b = 0
+Global FailedTests.i = 0
 
 Procedure Pass(TestName.s="")
 	PassedTests = PassedTests + 1

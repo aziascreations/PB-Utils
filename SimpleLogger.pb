@@ -1,16 +1,16 @@
 ﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Simple Logger                         ║ v0.0.1 ║
+; ║ Purebasic Utils - Simple Logger                         ║ v1.0.0 ║
 ; ╠═════════════════════════════════════════════════════════╩════════╣
 ; ║                                                                  ║
-; ║   It's just a test, so stuff might still not work.               ║
+; ║   ...                                                            ║
 ; ║                                                                  ║
 ; ╟──────────────────────────────────────────────────────────────────╢
 ; ║ Requirements: PB v5.60+ (Not tested with previous versions)      ║
 ; ╚══════════════════════════════════════════════════════════════════╝
 
 ;
-;- Constants & Enums
-;
+;- Constants, Globals & Enums
+;{
 
 Enumeration
 	#LoggingLevel_Any =   %00111111
@@ -22,43 +22,56 @@ Enumeration
 	#LoggingLevel_Warn =  %00000010
 	#LoggingLevel_Info =  %00000001
 	
-; 	#LoggingLevel_DFatal = #LoggingLevel_Fatal & #LoggingLevel_Debug
-; 	#LoggingLevel_DError = #LoggingLevel_Error & #LoggingLevel_Debug
-; 	#LoggingLevel_DWarn = #LoggingLevel_Warn & #LoggingLevel_Debug
-; 	#LoggingLevel_DInfo = #LoggingLevel_Info & #LoggingLevel_Debug
-	
 	#LoggingLevel_Off =   %00000000
 	#LoggingLevel_Keep =  %10000000
 EndEnumeration
 
-Global _LogLevelConsole.b = #LoggingLevel_Off
-Global _LogLevelDebug.b = #LoggingLevel_Any
-Global _LogLevelFile.b = #LoggingLevel_Off
+Structure LoggerVariables
+	LogLevelConsole.b
+	LogLevelDebug.b
+	LogLevelFile.b
+	
+	FormatTime.s
+	FormatDebug.s
+	FormatFile.s
+	FormatConsole.s
+	
+	LogPath.s
+	IsFileValid.b
+EndStructure
 
-Global _FormatTime.s = "%yy-%mm-%dd %hh:%ii:%ss"
-Global _FormatDebug.s = "%msg%"
-Global _FormatFile.s = "%time% - %msg%"
-Global _FormatConsole.s = "%msg%"
+Global LoggerConfig.LoggerVariables
 
-Global _LogPath.s = ""
-Global _IsFileValid.b = #False
-
+With LoggerConfig
+	\LogLevelConsole.b = #LoggingLevel_Off
+	\LogLevelDebug.b = #LoggingLevel_Any
+	\LogLevelFile.b = #LoggingLevel_Off
+	
+	\FormatTime = "%yy-%mm-%dd %hh:%ii:%ss"
+	\FormatDebug = "%msg%"
+	\FormatFile = "%time% - %msg%"
+	\FormatConsole = "%msg%"
+	
+	\LogPath = ""
+	\IsFileValid = #False
+EndWith
+;}
 
 ;
 ;- Config Procedures
-;
+;{
 
 ; Returns: Nonzero if the operation was successful and if the new file, if given, is valid.
 Procedure ConfigureLoggerOutputPath(LogFilePath.s="", KeepPreviousIfError.b=#True)
 	If Not Len(LogFilePath)
-		_LogPath = LogFilePath
-		_IsFileValid = #False
+		LoggerConfig\LogPath = LogFilePath
+		LoggerConfig\IsFileValid = #False
 		ProcedureReturn #True
 	EndIf
 	
 	If Not KeepPreviousIfError
-		_LogPath = LogFilePath
-		_IsFileValid = #False
+		LoggerConfig\LogPath = LogFilePath
+		LoggerConfig\IsFileValid = #False
 	EndIf
 	
 	If FileSize(LogFilePath) = -2
@@ -70,71 +83,98 @@ Procedure ConfigureLoggerOutputPath(LogFilePath.s="", KeepPreviousIfError.b=#Tru
 		Debug "Warn: "+LogFilePath+" already exist, some data could be corrupted if not carefull."
 	EndIf
 	
-	_LogPath = LogFilePath
-	_IsFileValid = #True
+	LoggerConfig\LogPath = LogFilePath
+	LoggerConfig\IsFileValid = #True
 	ProcedureReturn #True
 EndProcedure
 
-Procedure ConfigureLoggerLevels(LogFileLoggingLevel.b=#LoggingLevel_Keep, DebugWindowLoggingLevel.b = #LoggingLevel_Keep, ConsoleLoggingLevel.b = #LoggingLevel_Keep)
+Procedure ConfigureLogLevels(LogFileLoggingLevel.b=#LoggingLevel_Keep, DebugWindowLoggingLevel.b = #LoggingLevel_Keep, ConsoleLoggingLevel.b = #LoggingLevel_Keep)
 	If Not LogFileLoggingLevel & #LoggingLevel_Keep
-		_LogLevelFile = LogFileLoggingLevel
+		LoggerConfig\LogLevelFile = LogFileLoggingLevel
 	EndIf
 	
 	If Not DebugWindowLoggingLevel & #LoggingLevel_Keep
-		_LogLevelDebug = DebugWindowLoggingLevel
+		LoggerConfig\LogLevelDebug = DebugWindowLoggingLevel
 	EndIf
 	
 	If Not ConsoleLoggingLevel & #LoggingLevel_Keep
-		_LogLevelConsole = ConsoleLoggingLevel
+		LoggerConfig\LogLevelConsole = ConsoleLoggingLevel
 	EndIf
 EndProcedure
 
-Procedure ConfigureLoggerFormat(TimeFormat.s="", DebugWindowLoggingFormat.s="", LogFileLoggingFormat.s="", ConsoleLoggingFormat.s="")
+Procedure ConfigureFileLogLevel(LogFileLoggingLevel.b)
+	ConfigureLogLevels(LogFileLoggingLevel, #LoggingLevel_Keep, #LoggingLevel_Keep)
+EndProcedure
+
+Procedure ConfigureDebugWindowLogLevel(DebugWindowLoggingLevel.b)
+	ConfigureLogLevels(#LoggingLevel_Keep, DebugWindowLoggingLevel, #LoggingLevel_Keep)
+EndProcedure
+
+Procedure ConfigureConsoleLogLevel(ConsoleLoggingLevel.b)
+	ConfigureLogLevels(#LoggingLevel_Keep, #LoggingLevel_Keep, ConsoleLoggingLevel)
+EndProcedure
+
+Procedure ConfigureLogFormats(TimeFormat.s="", DebugWindowLoggingFormat.s="", LogFileLoggingFormat.s="", ConsoleLoggingFormat.s="")
 	If Len(TimeFormat)
-		_FormatTime = TimeFormat
+		LoggerConfig\FormatTime = TimeFormat
 	EndIf
 	
 	If Len(DebugWindowLoggingFormat)
-		_FormatDebug = DebugWindowLoggingFormat
+		LoggerConfig\FormatDebug = DebugWindowLoggingFormat
 	EndIf
 	
 	If Len(LogFileLoggingFormat)
-		_FormatFile = LogFileLoggingFormat
+		LoggerConfig\FormatFile = LogFileLoggingFormat
 	EndIf
 	
 	If Len(ConsoleLoggingFormat)
-		_FormatConsole = ConsoleLoggingFormat
+		LoggerConfig\FormatConsole = ConsoleLoggingFormat
 	EndIf
 EndProcedure
 
+Procedure ConfigureTimeLogFormat(TimeFormat.s)
+	ConfigureLogFormats(TimeFormat, "", "", "")
+EndProcedure
+
+Procedure ConfigureDebugWindowLogFormat(DebugWindowLoggingFormat.s)
+	ConfigureLogFormats("", DebugWindowLoggingFormat, "", "")
+EndProcedure
+
+Procedure ConfigureFileLogFormat(LogFileLoggingFormat.s)
+	ConfigureLogFormats("", "", LogFileLoggingFormat, "")
+EndProcedure
+
+Procedure ConfigureConsoleLogFormat(ConsoleLoggingFormat.s)
+	ConfigureLogFormats("", "", "", ConsoleLoggingFormat)
+EndProcedure
+;}
 
 ;
 ;- Logging Procedures
-;
+;{
 
-Procedure.s _FormatLogString(_Format.s, _Message.s)
-	_Format = ReplaceString(_Format, "%time%", FormatDate(_FormatTime, Date()))
+Procedure.s _FormatLogString(_Format.s, _Message.s, _MBTitle.s, _MBMessage.s)
+	_Format = ReplaceString(_Format, "%time%", FormatDate(LoggerConfig\FormatTime, Date()))
 	_Message = ReplaceString(_Format, "%msg%", _Message)
+	_Message = ReplaceString(_Message, "%mbtitle%", _MBTitle)
+	_Message = ReplaceString(_Message, "%mbmsg%", _MBMessage)
 	ProcedureReturn _Message
 EndProcedure
 
-Procedure _Log(MessageLevel.b, Message.s, OpenMB.b, Title.s, MBMessage.s, MBFlags)
-	If _LogLevelDebug & MessageLevel
-		Debug _FormatLogString(_FormatDebug, Message)
+Procedure _Log(MessageLevel.b, Message.s, OpenMB.b, MBTitle.s, MBMessage.s, MBFlags)
+	If LoggerConfig\LogLevelDebug & MessageLevel
+		Debug _FormatLogString(LoggerConfig\FormatDebug, Message, MBTitle, MBMessage)
 	EndIf
 	
-	If _LogLevelConsole & MessageLevel
-		PrintN(_FormatLogString(_FormatConsole, Message))
+	If LoggerConfig\LogLevelConsole & MessageLevel
+		PrintN(_FormatLogString(LoggerConfig\FormatConsole, Message, MBTitle, MBMessage))
 	EndIf
 	
+	;TODO: Write to file and return Message Requester if applicable.
 EndProcedure
 
-Procedure LogDebug(Message.s, OpenMB.b=#False, Title.s="Debug...", MBMessage.s="Why is this even shown ?!?", MBFlags=#PB_MessageRequester_Info)
-	ProcedureReturn _Log(#LoggingLevel_Debug, Message, OpenMB, Title, MBMessage, MBFlags)
-EndProcedure
-
-Procedure LogFatal(Message.s, ExitCode.i=-1, OpenMB.b=#False, Title.s="Fatal Error", MBMessage.s="A fatal error has occured.", MBFlags=#PB_MessageRequester_Error)
-	Protected a = _Log(#LoggingLevel_Fatal, Message, OpenMB, Title, MBMessage, MBFlags)
+Procedure LogFatal(Message.s, ExitCode.i=-1, OpenMB.b=#False, MBTitle.s="Fatal Error", MBMessage.s="A fatal error has occured.", MBFlags=#PB_MessageRequester_Error)
+	Protected a = _Log(#LoggingLevel_Fatal, Message, OpenMB, MBTitle, MBMessage, MBFlags)
 	If ExitCode = -1
 		ProcedureReturn a
 	Else
@@ -142,28 +182,35 @@ Procedure LogFatal(Message.s, ExitCode.i=-1, OpenMB.b=#False, Title.s="Fatal Err
 	EndIf
 EndProcedure
 
-Procedure LogError(Message.s, OpenMB.b=#False, Title.s="Error", MBMessage.s="An error has occured.", MBFlags=#PB_MessageRequester_Error)
-	ProcedureReturn _Log(#LoggingLevel_Error, Message, OpenMB, Title, MBMessage, MBFlags)
+Procedure LogDebug(Message.s, OpenMB.b=#False, MBTitle.s="Debug...", MBMessage.s="Why is this even shown ?!?", MBFlags=#PB_MessageRequester_Info)
+	ProcedureReturn _Log(#LoggingLevel_Debug, Message, OpenMB, MBTitle, MBMessage, MBFlags)
 EndProcedure
 
-Procedure LogWarn(Message.s, OpenMB.b=#False, Title.s="Warning", MBMessage.s="A warning has been issued.", MBFlags=#PB_MessageRequester_Warning)
-	ProcedureReturn _Log(#LoggingLevel_Warn, Message, OpenMB, Title, MBMessage, MBFlags)
+Procedure LogError(Message.s, OpenMB.b=#False, MBTitle.s="Error", MBMessage.s="An error has occured.", MBFlags=#PB_MessageRequester_Error)
+	ProcedureReturn _Log(#LoggingLevel_Error, Message, OpenMB, MBTitle, MBMessage, MBFlags)
 EndProcedure
 
-Procedure LogInfo(Message.s, OpenMB.b=#False, Title.s="Info", MBMessage.s="Do you really need to bother the user with basic info ?", MBFlags=#PB_MessageRequester_Info)
-	ProcedureReturn _Log(#LoggingLevel_Info, Message, OpenMB, Title, MBMessage, MBFlags)
+Procedure LogWarn(Message.s, OpenMB.b=#False, MBTitle.s="Warning", MBMessage.s="A warning has been issued.", MBFlags=#PB_MessageRequester_Warning)
+	ProcedureReturn _Log(#LoggingLevel_Warn, Message, OpenMB, MBTitle, MBMessage, MBFlags)
 EndProcedure
 
+Procedure LogInfo(Message.s, OpenMB.b=#False, MBTitle.s="Info", MBMessage.s="Do you really need to bother the user with basic info ?", MBFlags=#PB_MessageRequester_Info)
+	ProcedureReturn _Log(#LoggingLevel_Info, Message, OpenMB, MBTitle, MBMessage, MBFlags)
+EndProcedure
+;}
 
 ;
 ;- Tests & Examples
-;
+;{
 
 CompilerIf #PB_Compiler_IsMainFile
 	; TODO: Add an example here
 CompilerEndIf
+;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; Folding = --
+; CursorPosition = 167
+; FirstLine = 128
+; Folding = PCH9
 ; EnableXP
 ; CompileSourceDirectory
