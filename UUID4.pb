@@ -1,5 +1,5 @@
 ﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - UUID4                                 ║ v1.0.0 ║
+; ║ Purebasic Utils - UUID4                                 ║ v1.0.1 ║
 ; ╠═════════════════════════════════════════════════════════╩════════╣
 ; ║                                                                  ║
 ; ║   ???                                                            ║
@@ -20,7 +20,7 @@ EndEnumeration
 
 #_REGEX_UUID4 = "^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$"
 
-Debug "Creation UUID4 regex..."
+Debug "Creating UUID4 regex..."
 If Not CreateRegularExpression(#REGEX_ID_UUID4, #_REGEX_UUID4)
 	Debug "Failed to create UUID4 regex !"
 	; TODO: Add a MessageRequester ?
@@ -48,7 +48,20 @@ Procedure.s GenerateUUID4()
 	ProcedureReturn UUID.s
 EndProcedure
 
+;
+;- Tests & Examples
+;{
+
+CompilerIf #PB_Compiler_IsMainFile
+	For i=0 To 10
+		Debug GenerateUUID4()
+	Next
+CompilerEndIf
+;}
+
 ; IDE Options = PureBasic 5.60 (Windows - x86)
+; CursorPosition = 49
+; FirstLine = 7
 ; Folding = -
 ; EnableXP
 ; CompileSourceDirectory

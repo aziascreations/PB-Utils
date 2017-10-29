@@ -8,13 +8,15 @@
 ; ║ Requirements: PB v5.60+ (Not tested with previous versions)      ║
 ; ╚══════════════════════════════════════════════════════════════════╝
 
+; TODO: Add option to enable/disable (override) fatal error MB thingy
+
 ;
 ;- Constants, Globals & Enums
 ;{
 
 Enumeration
 	#LoggingLevel_Any =   %00111111
-	#LoggingLevel_Trace = %01100000
+	#LoggingLevel_Trace = %01000000
 	#LoggingLevel_Debug = %00100000
 	
 	#LoggingLevel_Fatal = %00001000
@@ -182,6 +184,10 @@ Procedure LogFatal(Message.s, ExitCode.i=-1, OpenMB.b=#False, MBTitle.s="Fatal E
 	EndIf
 EndProcedure
 
+Procedure LogTrace(Message.s, OpenMB.b=#False, MBTitle.s="Debug...", MBMessage.s="Why is this even shown ?!?", MBFlags=#PB_MessageRequester_Info)
+	ProcedureReturn _Log(#LoggingLevel_Trace, Message, OpenMB, MBTitle, MBMessage, MBFlags)
+EndProcedure
+
 Procedure LogDebug(Message.s, OpenMB.b=#False, MBTitle.s="Debug...", MBMessage.s="Why is this even shown ?!?", MBFlags=#PB_MessageRequester_Info)
 	ProcedureReturn _Log(#LoggingLevel_Debug, Message, OpenMB, MBTitle, MBMessage, MBFlags)
 EndProcedure
@@ -209,8 +215,8 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 167
-; FirstLine = 128
-; Folding = PCH9
+; CursorPosition = 18
+; FirstLine = 2
+; Folding = PCH5
 ; EnableXP
 ; CompileSourceDirectory

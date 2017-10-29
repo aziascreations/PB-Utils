@@ -9,7 +9,7 @@ For each of them, credit is given to the original author and a [source url] is a
 &nbsp;&nbsp;● [Logger](#logger)<br>
 &nbsp;&nbsp;● [Strings](#strings)<br>
 &nbsp;&nbsp;● [Unit Testing](#unit-testing-basic)<br>
-&nbsp;&nbsp;● [UUID4](#uuid4-lite-version)
+&nbsp;&nbsp;● [UUID4](#uuid4-logger-version--lite-version)
 
 ## Utilities
 ### [Logger](Logger.pb)
@@ -101,7 +101,7 @@ The `TestName.s` parameter is optional and will simply influence the text displa
 &nbsp;&nbsp;&nbsp;&nbsp;"Passed" if `TestName.s` is empty or "Passed -> TestName.s" otherwise.<br>
 <br>
 
-### [UUID4](UUID4.pb) ([Lite version](UUID4-Lite.pb))
+### [UUID4](UUID4.pb) ([Logger version](UUID4-Logger.pb) / ~~[Lite version](UUID4-Lite.pb)~~)
 In both version, you can generate a UUID4 by using the following procedure:
 
 ```GenerateUUID4()```<br>
