@@ -2,7 +2,7 @@
 A small collection of utilities designed to help you in [programming in PB ?].<br>
 
 **Disclaimer:**<br>
-Some procedure are based on [other people's code] .<br>
+Some procedures are based on [other people's code] .<br>
 For each of them, credit is given to the original author and a [source url] is also given.
 
 **Available utilities:**<br>
@@ -12,7 +12,7 @@ For each of them, credit is given to the original author and a [source url] is a
 &nbsp;&nbsp;● [UUID4](#uuid4-lite-version)
 
 ## Utilities
-### [Logger](SimpleLogger.pb)
+### [Logger](Logger.pb)
 This utility lets you easily log things to the console, debug window, or to a log file.
 
 #### ◆ **Log file configuration**
@@ -61,8 +61,6 @@ Default formats:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;● Debug: `"%msg%"`<br>
 &nbsp;&nbsp;&nbsp;&nbsp;● Console: `"%msg%"`
 
-TODO: Replace Title.s by MBTitle.s
-
 #### ◆ **Usage**
 <br>
 
@@ -91,10 +89,10 @@ This basic unit testing util gives you access to the followinf procedures and va
 &nbsp;&nbsp;&nbsp;&nbsp;The opposite of `AssertTrue()`.
 
 `Pass(TestName.s="")`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Will simple increment `PassedTests.i` and print "Passed" in the debug window
+&nbsp;&nbsp;&nbsp;&nbsp;Will simply increment `PassedTests.i` and print "Passed" in the debug window
 
 `Fail(TestName.s="")`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Will simple increment `FailedTests.i` and print "Failed" in the debug window
+&nbsp;&nbsp;&nbsp;&nbsp;Will simply increment `FailedTests.i` and print "Failed" in the debug window
 
 `PassedTests.i`: The number of passed tests<br>
 `FailedTests.i`: The number of failed tests
@@ -114,6 +112,9 @@ And if you use the [Full version](UUID4.pb), you have access to a regex (`#REGEX
 # [Enumerations Used]
 * Regex ID -> Regex
 * Exit Codes -> ErrorCode (Used with `End [Integer]`)
+
+# Links
+* [cli-args-pb](https://github.com/aziascreations/cli-args-pb): Launch parameters parser
 
 # Credits
 The original authors and posts are also mentionned and linked in the source files.
