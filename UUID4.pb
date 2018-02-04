@@ -1,5 +1,5 @@
 ﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - UUID4                                 ║ v1.0.1 ║
+; ║ Purebasic Utils - UUID4                                 ║ v1.0.2 ║
 ; ╠═════════════════════════════════════════════════════════╩════════╣
 ; ║                                                                  ║
 ; ║   ???                                                            ║
@@ -9,6 +9,19 @@
 ; ╟──────────────────────────────────────────────────────────────────╢
 ; ║ Source: http://www.purebasic.fr/english/viewtopic.php?t=38008    ║
 ; ╚══════════════════════════════════════════════════════════════════╝
+
+;
+;- Compiler Options
+;{
+
+; The following line is only use to see if it works with it and for debugging
+;EnableExplicit
+
+;}
+
+;
+;- Variables & Constants
+;{
 
 Enumeration Regex
 	#REGEX_ID_UUID4
@@ -26,6 +39,13 @@ If Not CreateRegularExpression(#REGEX_ID_UUID4, #_REGEX_UUID4)
 	; TODO: Add a MessageRequester ?
 	End #_ERR_REGEX_UUID4CreationFailure
 EndIf
+
+
+;}
+
+;
+;- Procedures
+;{
 
 ; Returns a UUID4 as a String
 Procedure.s GenerateUUID4()
@@ -48,11 +68,18 @@ Procedure.s GenerateUUID4()
 	ProcedureReturn UUID.s
 EndProcedure
 
+;}
+
 ;
-;- Tests & Examples
+;- Unit Tests & Examples
 ;{
 
 CompilerIf #PB_Compiler_IsMainFile
+	XIncludeFile "UnitTest-Basic.pb"
+	
+	Debug "Unit tests -> "+Chr(34)+#PB_Compiler_Filename+Chr(34)
+	Debug ""
+	
 	For i=0 To 10
 		Debug GenerateUUID4()
 	Next
@@ -60,8 +87,7 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 49
-; FirstLine = 7
+; CursorPosition = 11
 ; Folding = -
 ; EnableXP
 ; CompileSourceDirectory

@@ -10,6 +10,8 @@
 
 ; TODO: Add option to enable/disable (override) fatal error MB thingy
 
+; TODO: Change the Enumaration for the levels to a EnumerationBinary
+
 ;
 ;- Constants, Globals & Enums
 ;{
@@ -215,8 +217,8 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 18
-; FirstLine = 2
+; CursorPosition = 16
+; FirstLine = 6
 ; Folding = PCH5
 ; EnableXP
 ; CompileSourceDirectory

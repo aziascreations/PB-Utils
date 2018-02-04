@@ -1,5 +1,5 @@
 ﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - UUID4-Logger                          ║ v1.0.1 ║
+; ║ Purebasic Utils - UUID4-Logger                          ║ v1.0.2 ║
 ; ╠═════════════════════════════════════════════════════════╩════════╣
 ; ║                                                                  ║
 ; ║   ???                                                            ║
@@ -9,6 +9,11 @@
 ; ╟──────────────────────────────────────────────────────────────────╢
 ; ║ Source: http://www.purebasic.fr/english/viewtopic.php?t=38008    ║
 ; ╚══════════════════════════════════════════════════════════════════╝
+
+Debug "----------------------------------------"
+Debug " ! You are using a deprecated utility ! "
+Debug "        ! Use UUID4.pb instead !        "
+Debug "----------------------------------------"
 
 XIncludeFile(".\Logger.pb")
 
@@ -62,7 +67,7 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 1
+; CursorPosition = 14
 ; Folding = -
 ; EnableXP
 ; CompileSourceDirectory
