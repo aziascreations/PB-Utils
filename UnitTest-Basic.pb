@@ -1,5 +1,5 @@
 ﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Unit Test - Basic                     ║ v1.0.0 ║
+; ║ Purebasic Utils - Unit Test - Basic                     ║ v1.1.0 ║
 ; ╠═════════════════════════════════════════════════════════╩════════╣
 ; ║                                                                  ║
 ; ║   ???                                                            ║
@@ -20,8 +20,9 @@
 ;
 ;- Variables & Constants
 ;{
-Global PassedTests.i = 0
-Global FailedTests.i = 0
+
+Global PassedUnitTests.i = 0
+Global FailedUnitTests.i = 0
 
 ;}
 
@@ -30,7 +31,7 @@ Global FailedTests.i = 0
 ;{
 
 Procedure Pass(TestName.s="")
-	PassedTests = PassedTests + 1
+	PassedUnitTests = PassedUnitTests + 1
 	If Len(TestName)
 		Debug "Passed -> "+TestName
 	Else
@@ -39,7 +40,7 @@ Procedure Pass(TestName.s="")
 EndProcedure
 
 Procedure Fail(TestName.s="")
-	FailedTests = FailedTests + 1
+	FailedUnitTests = FailedUnitTests + 1
 	If Len(TestName)
 		Debug "Failed -> "+TestName
 	Else
@@ -47,14 +48,7 @@ Procedure Fail(TestName.s="")
 	EndIf
 EndProcedure
 
-; Why the fuck isn't there a default value for Bool.b ?
-; What... I'm starting to wonder if I'm not losing it when I read this kind
-;  of shit, what the hell was I thinking when I wrote this procedure ?
-; Yeah..., caffeine and hot chocolate don't help when you are sleep deprived...
-; I couldn't even understand a 5 line procedure...
-; And to respond to the original question: Because there are 2 fucking procedures
-;  above this one for this...
-Procedure AssertTrue(Bool.b, TestName.s="")
+Procedure AssertTrue(Bool.b=#True, TestName.s="")
 	If Bool
 		Pass(TestName)
 	Else
@@ -62,7 +56,7 @@ Procedure AssertTrue(Bool.b, TestName.s="")
 	EndIf
 EndProcedure
 
-Procedure AssertFalse(Bool.b, TestName.s="")
+Procedure AssertFalse(Bool.b=#False, TestName.s="")
 	If Bool
 		Fail(TestName)
 	Else
@@ -77,7 +71,7 @@ EndProcedure
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 34
+; CursorPosition = 13
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory

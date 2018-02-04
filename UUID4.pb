@@ -15,6 +15,7 @@
 ;{
 
 ; The following line is only use to see if it works with it and for debugging
+; !!! Currenctly non-compliant !!!
 ;EnableExplicit
 
 ;}
@@ -39,7 +40,6 @@ If Not CreateRegularExpression(#REGEX_ID_UUID4, #_REGEX_UUID4)
 	; TODO: Add a MessageRequester ?
 	End #_ERR_REGEX_UUID4CreationFailure
 EndIf
-
 
 ;}
 
@@ -68,6 +68,11 @@ Procedure.s GenerateUUID4()
 	ProcedureReturn UUID.s
 EndProcedure
 
+; Returns a non-zero value If the string matches the UUID4 regex.
+Procedure IsUUID4Compliant(uuid4$)
+	ProcedureReturn MatchRegularExpression(#REGEX_ID_UUID4, uuid4$)
+EndProcedure
+
 ;}
 
 ;
@@ -84,10 +89,12 @@ CompilerIf #PB_Compiler_IsMainFile
 		Debug GenerateUUID4()
 	Next
 CompilerEndIf
+
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 11
-; Folding = -
+; CursorPosition = 91
+; FirstLine = 57
+; Folding = --
 ; EnableXP
 ; CompileSourceDirectory

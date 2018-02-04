@@ -139,9 +139,9 @@ This basic unit testing [module ???] utility gives you access to the following p
 `Fail(TestName.s="")`<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Will simply increment `FailedTests.i` and print "Failed" in the debug window
 
-<b>Variables:</b><br>
-`PassedTests.i`: The number of passed tests<br>
-`FailedTests.i`: The number of failed tests
+<b>Global Variables:</b><br>
+`PassedUnitTests.i`: The number of passed tests<br>
+`FailedUnitTests.i`: The number of failed tests
 
 <b>Remarks:</b><br>
 The `TestName.s` parameter is optional and will simply influence the text displayed in the debug window.<br>
@@ -154,14 +154,14 @@ In both version, you can generate a UUID4 by using the following procedure:
 ``GenerateUUID4()``<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Returns a UUID4 String that matches the standard.<br>
 
-``IsUUID4Compliant()`` ???<br>
+``IsUUID4Compliant(uuid4$)``<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Returns a non-zero value if the string matches the regex.<br>
 
 You also have access to a regex (`#REGEX_ID_UUID4`) that lets you check if a String matches the UUID4 standard.<br>
 
 # Enumerations Used
-* Regex ID -> Regex
-* Exit Codes -> ErrorCode (Used with `End [Integer]`)
+* Regex (Used for regex IDs)
+* ErrorCode (Used with `End [Integer]`)
 
 # Usefull Links
 * [cli-args-pb](https://github.com/aziascreations/cli-args-pb): Launch parameters parser
@@ -178,4 +178,4 @@ The original authors and posts are also mentionned and linked in the source file
 &nbsp;&nbsp;([Thread](http://www.purebasic.fr/english/viewtopic.php?t=38008))
 
 # License
-[I still don't know...](LICENSE)
+[WTFPL](LICENSE)
