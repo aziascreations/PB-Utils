@@ -85,16 +85,30 @@ CompilerIf #PB_Compiler_IsMainFile
 	Debug "Unit tests -> "+Chr(34)+#PB_Compiler_Filename+Chr(34)
 	Debug ""
 	
-	For i=0 To 10
+	Debug "> GenerateUUID4()"
+	For i=0 To 5
 		Debug GenerateUUID4()
 	Next
+	Pass("UUID Generation")
+	Debug ""
+	
+	If FailedUnitTests
+		Debug "ERROR: The ability to generate UUID4 string is required for the other unit tests"
+		End 1
+	EndIf
+	
+	Debug "> IsUUID4Compliant(uuid4$)"
+	Assert(IsUUID4Compliant(GenerateUUID4()), "UUID4 validity check")
+	Debug ""
+	
+	Debug "-- "+PassedUnitTests+" passed - "+FailedUnitTests+" failed --"
 CompilerEndIf
 
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 91
-; FirstLine = 57
+; CursorPosition = 103
+; FirstLine = 74
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory

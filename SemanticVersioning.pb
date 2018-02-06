@@ -1,5 +1,5 @@
 ﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Semantic Versionning                  ║ v1.0.0 ║
+; ║ Purebasic Utils - Semantic Versionning                  ║ v1.0.1 ║
 ; ╠═════════════════════════════════════════════════════════╩════════╣
 ; ║ Requirements: * PB v5.60+ (Not tested with previous versions)    ║
 ; ║               * Strings.pb 1.3.0+ (From this set of utils)       ║
@@ -74,31 +74,30 @@ Procedure.b InitializeSemVer(CanShowMessages.b=#False, CanEndProgram.b=#True)
 	ProcedureReturn #True
 EndProcedure
 
-Procedure.b IsVersionValid(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)
-	ProcedureReturn #True
+Procedure.b IsVersionValid(Version.s, DoValidityCheck=#True)
+	If Not DoValidityCheck
+		ProcedureReturn #True
+	EndIf
+	
+	ProcedureReturn MatchRegularExpression(#REGEX_ID_SEMVER, Version)
+	;ProcedureReturn #True
 EndProcedure
 
 Procedure.s GetVersionNumber(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)
-	If DoValidityCheck
-		If Not IsVersionValid(Version)
+	If Not IsVersionValid(Version, DoValidityCheck)
+		CompilerIf #PB_Compiler_IsIncludeFile
 			Debug "The given version is invalid and can't be worked on ("+Version+")"
-			
-			If CanShowMessages Or (CanShowMessages And Semver_CanShowMessages)
-				MessageRequester("Fatal Error", "HI", #PB_MessageRequester_Error)
-			EndIf
-			
-			If CanEndProgram Or (CanEndProgram And Semver_CanEndProgram)
-				End #ERR_SEMVER_InvalidVersion
-			EndIf
-			
-			; Returns a version filled with "-1" to "force" an error in the other
-			;  internal procedures that call this one since the first check happens before.
-			;  calling this procedure.
-			; BTW, this part of the code should never execute under normal conditions if it is.
-			;  called from the other internal procedures.
-			; It's still there in case some people need it and fuck up.
-			ProcedureReturn "-1.-1.-1"
+		CompilerEndIf
+		
+		If CanShowMessages Or (CanShowMessages And Semver_CanShowMessages)
+			MessageRequester("Fatal Error", "HI", #PB_MessageRequester_Error)
 		EndIf
+		
+		If CanEndProgram Or (CanEndProgram And Semver_CanEndProgram)
+			End #ERR_SEMVER_InvalidVersion
+		EndIf
+		
+		ProcedureReturn "-1.-1.-1"
 	EndIf
 	
 	Dim VersionParts.s(0)
@@ -109,13 +108,23 @@ Procedure.s GetVersionNumber(Version.s, CanShowMessages.b=#False, CanEndProgram.
 EndProcedure
 
 Procedure.b GetVersionMajor(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)
-	If DoValidityCheck
-		If Not IsVersionValid(Version, CanShowMessages, CanEndProgram, #False)
-			Debug "ERR1"
+	If Not IsVersionValid(Version, DoValidityCheck)
+		CompilerIf #PB_Compiler_IsIncludeFile
+			Debug "The given version is invalid and can't be worked on ("+Version+")"
+		CompilerEndIf
+		
+		If CanShowMessages Or (CanShowMessages And Semver_CanShowMessages)
+			MessageRequester("Fatal Error", "HI", #PB_MessageRequester_Error)
 		EndIf
+		
+		If CanEndProgram Or (CanEndProgram And Semver_CanEndProgram)
+			End #ERR_SEMVER_InvalidVersion
+		EndIf
+		
+		ProcedureReturn -1
 	EndIf
 	
-	Version = GetVersionNumber(Version)
+	Version = GetVersionNumber(Version, CanShowMessages, CanEndProgram, DoValidityCheck)
 	
 	Dim VersionNumbers.s(0)
 	ExplodeStringToArray(VersionNumbers(), Version, ".")
@@ -124,13 +133,23 @@ Procedure.b GetVersionMajor(Version.s, CanShowMessages.b=#False, CanEndProgram.b
 EndProcedure
 
 Procedure.b GetVersionMinor(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)
-	If DoValidityCheck
-		If Not IsVersionValid(Version, CanShowMessages, CanEndProgram, #False)
-			Debug "ERR2"
+	If Not IsVersionValid(Version, DoValidityCheck)
+		CompilerIf #PB_Compiler_IsIncludeFile
+			Debug "The given version is invalid and can't be worked on ("+Version+")"
+		CompilerEndIf
+		
+		If CanShowMessages Or (CanShowMessages And Semver_CanShowMessages)
+			MessageRequester("Fatal Error", "HI", #PB_MessageRequester_Error)
 		EndIf
+		
+		If CanEndProgram Or (CanEndProgram And Semver_CanEndProgram)
+			End #ERR_SEMVER_InvalidVersion
+		EndIf
+		
+		ProcedureReturn -1
 	EndIf
 	
-	Version = GetVersionNumber(Version)
+	Version = GetVersionNumber(Version, CanShowMessages, CanEndProgram, DoValidityCheck)
 	
 	Dim VersionNumbers.s(0)
 	ExplodeStringToArray(VersionNumbers(), Version, ".")
@@ -139,13 +158,23 @@ Procedure.b GetVersionMinor(Version.s, CanShowMessages.b=#False, CanEndProgram.b
 EndProcedure
 
 Procedure.b GetVersionPatch(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)
-	If DoValidityCheck
-		If Not IsVersionValid(Version, CanShowMessages, CanEndProgram, #False)
-			Debug "ERR3"
+	If Not IsVersionValid(Version, DoValidityCheck)
+		CompilerIf #PB_Compiler_IsIncludeFile
+			Debug "The given version is invalid and can't be worked on ("+Version+")"
+		CompilerEndIf
+		
+		If CanShowMessages Or (CanShowMessages And Semver_CanShowMessages)
+			MessageRequester("Fatal Error", "HI", #PB_MessageRequester_Error)
 		EndIf
+		
+		If CanEndProgram Or (CanEndProgram And Semver_CanEndProgram)
+			End #ERR_SEMVER_InvalidVersion
+		EndIf
+		
+		ProcedureReturn -1
 	EndIf
 	
-	Version = GetVersionNumber(Version)
+	Version = GetVersionNumber(Version, CanShowMessages, CanEndProgram, DoValidityCheck)
 	
 	Dim VersionNumbers.s(0)
 	ExplodeStringToArray(VersionNumbers(), Version, ".")
@@ -153,9 +182,9 @@ Procedure.b GetVersionPatch(Version.s, CanShowMessages.b=#False, CanEndProgram.b
 	ProcedureReturn Val(VersionNumbers(2))
 EndProcedure
 
-Procedure.b IsVersionCompatible(VersionA.s, VersionB.s)
-	
-EndProcedure
+; Procedure.b IsVersionCompatible(VersionA.s, VersionB.s)
+; 	
+; EndProcedure
 
 ;}
 
@@ -163,13 +192,71 @@ EndProcedure
 ;- Unit Tests & Examples
 ;{
 
-; Insert some code here
+CompilerIf #PB_Compiler_IsMainFile
+	XIncludeFile "UnitTest-Basic.pb"
+	
+	Debug "Unit tests -> "+Chr(34)+#PB_Compiler_Filename+Chr(34)
+	Debug ""
+	
+	Debug "> InitializeSemVer(#False, #False)"
+	Assert(InitializeSemVer(#False, #False), "Initialization")
+	Debug ""
+	
+	If FailedUnitTests
+		Debug "ERROR: The success of the initialiization is required for the other procedures."
+		End 1
+	EndIf
+	
+	Debug "> IsVersionValid(Version.s, #True)"
+	AssertTrue(IsVersionValid("1.0.0-abc+abc", #True), "1.0.0-abc+abc (Valid)")
+	AssertTrue(IsVersionValid("1.0.0-alpha1.0.0+build156", #True), "1.0.0-alpha1.0+build156 (Valid)")
+	AssertFalse(IsVersionValid("1.0.0-alpha1.0.0+build156.12", #True), "1.0.0-alpha1.0+build156.12 (Invalid)")
+	AssertFalse(IsVersionValid("1.0.0.0", #True), "1.0.0.0  (Invalid)")
+	Debug ""
+	
+	Debug "> GetVersionNumber(Version.s, #False, #False, #False)"
+	Assert(Bool(GetVersionNumber("1.0.0-abc+abc", #False, #False, #False) = "1.0.0"), "1.0.0-abc+abc -> 1.0.0")
+	Assert(Bool(GetVersionNumber("1.0.0.0-abc+abc", #False, #False, #False) = "1.0.0.0"), "1.0.0.0-abc+abc -> 1.0.0.0 (The procedure only clean the string thinking it's a valid one)")
+	Assert(Bool(GetVersionNumber("unverified-stuff", #False, #False, #False) = "unverified"), "unverified-stuff -> unverified (Same as above)")
+	Debug ""
+	
+	Debug "> GetVersionNumber(Version.s, #False, #False, #True)"
+	Assert(Bool(GetVersionNumber("1.0.0-abc+abc", #False, #False, #True) = "1.0.0"), "1.0.0-abc+abc -> 1.0.0")
+	Assert(Bool(GetVersionNumber("1.0.0.0-abc+abc", #False, #False, #True) = "-1.-1.-1"), "1.0.0.0-abc+abc -> -1.-1.-1 (Forced invalid version to force error trigerring, but still parsable later)")
+	Assert(Bool(GetVersionNumber("invalid-stuff", #False, #False, #True) = "-1.-1.-1"), "invalid-stuff -> -1.-1.-1 (Same as above)")
+	Debug ""
+	
+	Debug "> GetVersionMajor(Version.s, #False, #False, #True/#False)"
+	Assert(Bool(GetVersionMajor("1.2.3", #False, #False, #True) = 1), "1.2.3 -> 1")
+	Assert(Bool(GetVersionMajor("1.0.0.0", #False, #False, #True) = -1), "1.0.0.0 -> -1 (Invalid)")
+	Assert(Bool(GetVersionMajor("1.2.3.4", #False, #False, #False) = 1), "1.2.3.4 -> 1 (Invalid, but unchecked)")
+	Debug ""
+	
+	Debug "> GetVersionMinor(Version.s, #False, #False, #True/#False)"
+	Assert(Bool(GetVersionMinor("1.2.3", #False, #False, #True) = 2), "1.2.3 -> 2")
+	Assert(Bool(GetVersionMinor("1.0.0.0", #False, #False, #True) = -1), "1.0.0.0 -> -1 (Invalid)")
+	Assert(Bool(GetVersionMinor("1.2.3.4", #False, #False, #False) = 2), "1.2.3.4 -> 2 (Invalid, but unchecked)")
+	Debug ""
+	
+	Debug "> GetVersionPatch(Version.s, #False, #False, #True/#False)"
+	Assert(Bool(GetVersionPatch("1.2.3", #False, #False, #True) = 3), "1.2.3 -> 3")
+	Assert(Bool(GetVersionPatch("1.0.0.0", #False, #False, #True) = -1), "1.0.0.0 -> -1 (Invalid)")
+	Assert(Bool(GetVersionPatch("1.2.3.4", #False, #False, #False) = 3), "1.2.3.4 -> 3 (Invalid, but unchecked)")
+	Debug ""
+	
+	If FailedUnitTests
+		Debug "ERROR: The previously tested procedures need to work in order for the following tests to work."
+		End 1
+	EndIf
+	
+	Debug "-- "+PassedUnitTests+" passed - "+FailedUnitTests+" failed --"
+CompilerEndIf
 
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 28
-; FirstLine = 134
+; CursorPosition = 98
+; FirstLine = 82
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory

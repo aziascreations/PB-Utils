@@ -90,12 +90,14 @@ CompilerIf #PB_Compiler_IsMainFile
 	AssertFalse(Bool(IsNullOrEmpty("Hello World")), Chr(34)+"Hello World"+Chr(34))
 	Debug ""
 	
-	Debug "-- "+PassedTests+" passed - "+FailedTests+" failed --"
+	Debug "-- "+PassedUnitTests+" passed - "+FailedUnitTests+" failed --"
 CompilerEndIf
 
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
+; CursorPosition = 92
+; FirstLine = 63
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory

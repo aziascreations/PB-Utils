@@ -8,6 +8,8 @@
 ; ║ Requirements: PB v5.60+ (Not tested with previous versions)      ║
 ; ╚══════════════════════════════════════════════════════════════════╝
 
+;TODO?: Add a EndUnitTesting procedure that prints the number of failed and passed tests
+
 ;
 ;- Compiler Options
 ;{
@@ -71,7 +73,7 @@ EndProcedure
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 13
+; CursorPosition = 10
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory
