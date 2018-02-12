@@ -11,6 +11,7 @@ Every source code should work with EnableExplicit.
 
 **Available utilities:**<br>
 &nbsp;&nbsp;● [Logger](#logger)<br>
+&nbsp;&nbsp;● [Semantic Versioning](#semantic-versioning)<br>
 &nbsp;&nbsp;● [Strings](#strings)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚬ [ExplodeStringToArray()](#user-content-strings.explodestringtoarray)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚬ [IsNullOrEmpty()](#user-content-strings.isnullorempty)<br>
@@ -20,6 +21,10 @@ Every source code should work with EnableExplicit.
 
 ## Utilities
 ### [Logger](Logger.pb)
+
+<a name="logger.tmp"></a>
+<details>
+<summary><code>Click to expand</code></summary>
 <b>!!! A large portion of the formatter will be reworked when the Strings.Format() procedure is finished. !!!</b>
 
 This utility lets you easily log things to the console, debug window, or to a log file.
@@ -72,6 +77,27 @@ Default formats:<br>
 
 #### ◆ **Usage**
 <br>
+</details><br>
+
+
+### [Semantic Versioning](SemanticVersioning.pb)
+
+<code>InitializeSemVer(CanShowMessages.b=#False, CanEndProgram.b=#True)</code><br>
+
+<code>IsVersionValid(Version.s, DoValidityCheck=#True)</code><br>
+
+<code>GetVersionNumber(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)</code><br>
+
+<code>GetVersionMajor(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)</code><br>
+
+<code>GetVersionMinor(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)</code><br>
+
+<code>GetVersionPatch(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)</code><br>
+
+<code>IsVersionCompatible(VersionA.s, VersionB.s)</code>
+
+<br>
+
 
 ### [Strings](Strings.pb)
 

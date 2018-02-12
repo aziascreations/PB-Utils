@@ -42,7 +42,8 @@ EndProcedure
 
 ; Returns: Nonzero if a$ is equal to #Null$ or is filled with spaces.
 Procedure.b IsNullOrEmpty(a$)
-	ProcedureReturn Bool(a$ = #Null$ Or Not Len(ReplaceString(a$, " ", "")))
+	;ProcedureReturn Bool(a$ = #Null$ Or Not Len(ReplaceString(a$, " ", "")))
+	ProcedureReturn Bool(Trim(GroupName$) = #Null$)
 EndProcedure
 
 Procedure.s Format(text.s, *val1 = 0, *val2 = 0, *val3 = 0, *val4 = 0, *val5 = 0, *val6 = 0, *val7 = 0, *val8 = 0, *val9 = 0, *val10 = 0, *val11 = 0 )
@@ -96,8 +97,10 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 92
-; FirstLine = 63
+; CursorPosition = 45
+; FirstLine = 33
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory
+; EnableCompileCount = 0
+; EnableBuildCount = 0
