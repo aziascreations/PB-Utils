@@ -1,0 +1,8 @@
+﻿Piece = of shit
+
+[Section1]
+keytest = string test
+
+[Section 2]
+go = fuck
+yourself = cunt
