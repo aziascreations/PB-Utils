@@ -1,0 +1,11 @@
+﻿# These entries are in no particular group
+title = Program Title
+
+[UI-Button]
+cancel = Cancel
+back = Back
+next = Next
+
+[UI-Label]
+string1 = My label
+string2 = Hello World
