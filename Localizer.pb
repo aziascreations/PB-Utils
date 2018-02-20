@@ -1,13 +1,14 @@
-﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Localizer                             ║ v0.0.3 ║
-; ╠═════════════════════════════════════════════════════════╩════════╣
-; ║                                                                  ║
-; ║   ???                                                            ║
-; ║                                                                  ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Requirements: * PB v5.60+ (Not tested onprevious versions)       ║
-; ║               * Previous versions are untested                   ║
-; ╚══════════════════════════════════════════════════════════════════╝
+﻿; ╔═══════════════════════════════════════════════════════════════════╦════════╗
+; ║ Purebasic Utils - Localizer                                       ║ v0.0.4 ║
+; ╠═══════════════════════════════════════════════════════════════════╩════════╣
+; ║                                                                            ║
+; ║   ???                                                                      ║
+; ║                                                                            ║
+; ╟────────────────────────────────────────────────────────────────────────────╢
+; ║ Requirements: PB v5.60+ (Not tested on previous versions)                  ║
+; ╟────────────────────────────────────────────────────────────────────────────╢
+; ║ Documentation: https://github.com/aziascreations/PB-Utils/wiki/Localizer   ║
+; ╚════════════════════════════════════════════════════════════════════════════╝
 
 ; TODO: Check if ClearStructure must be used when loading languages over and over.
 ; http://www.purebasic.fr/english/viewtopic.php?f=7&t=41990
@@ -18,6 +19,8 @@
 ; TODO: Clear old entries and groups when calling LoadLanguage() more than 1 time.
 
 ; TODO: in Localize(), if dotted mode is on and no key if given, attempt to get one from Group$.
+
+; Put a special comment in the readme about how this utility is still unoptimized and that major changes will occur later.
 
 ;
 ;- Compiler Options
@@ -38,7 +41,7 @@ EnumerationBinary LocalizerOptions
 	#LOADING_MODE_SEPARATED
 	#LOADING_MODE_JOINED
 	#LOADING_MODE_NONULLGROUP
-	#LOADING_MODE_JSON ; Not fully implemented
+	#LOADING_MODE_JSON
 EndEnumeration
 
 Structure LanguageGroup
@@ -92,10 +95,11 @@ Procedure.b GetLanguageGroupIndex(GroupName$, CreateIfNotFound.b=#False)
 	ProcedureReturn ListIndex(LanguageGroups())
 EndProcedure
 
-;Procedure _ParseLocalLine(Line$, *Group$, )
-
 ; Returns a non-zero value if everything went correctly, more info is given in the debugger otherwise.
 Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED, LoadingMode.b=#LOADING_MODE_SEPARATED)
+	;- > Checking, cleaning and setting variables
+	;{
+	
 	; Checking if at least one localizing mode is given
 	If Not (LocalizingMode & #LOCALIZING_MODE_GROUPED Or LocalizingMode & #LOCALIZING_MODE_DOTTED)
 		DebuggerError("The localizing mode is invalid. (loc-0.0)")
@@ -122,15 +126,20 @@ Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED
 	; Setting variables
 	LocalizerOptions = LocalizingMode | LoadingMode
 	Protected Group$, Key$, Value$, Temp$
-	;Protected Group$, Temp$
 	Protected GroupIndex.i = 0
 	
-	; Values used inside the big loops, couldn't use protected for both fuck variable scope right ?, fucking hell...
+	; Values used inside the big loops, couldn't use protected for both because fuck variable scope right ?, fucking hell...
 	Protected LastDotPosition.b = 0
 	Protected _TmpIndex.b
 	
 	; Value used in the second lood (Replace Temp$ with this one later ?)
 	Protected Line$
+	; Same for these ones except the json, it is used after the 1st one if using json.
+	Protected FileId.i, JsonId.i
+	
+	;}
+	;- > ???
+	;{
 	
 	; Loading non-json DataSection stuff
 	Restore Language
@@ -223,112 +232,133 @@ Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED
 		DebuggerWarning("unimplemented !")
 	EndIf
 	
-	; Maybe clear the variables
+	;}
+	;- > Preparing & loading locale file
+	;{
 	
-	; Preparing the FilePath$ variable
-	; Return here if invalid file or no file at all
+	; Returns if the file can't be loaded.
 	If Not FileSize(FilePath$) >= 0
 		ProcedureReturn #True
 	EndIf
-	Protected FileId.i = ReadFile(#PB_Any, FilePath$)
 	
-	If Not FileId
-		DebuggerWarning("Failed to open given local file: " + FilePath$)
-		ProcedureReturn #False
+	If LocalizerOptions & #LOADING_MODE_JSON
+		JsonId = LoadJSON(#PB_Any, FilePath$)
+		If Not JsonId
+			DebuggerWarning("Failed to open/parse given json locale file: " + FilePath$)
+			DebuggerWarning(JSONErrorMessage()+" - L"+JSONErrorLine()+":"+JSONErrorPosition())
+			ProcedureReturn #False
+		EndIf
+	Else
+		FileId = ReadFile(#PB_Any, FilePath$)
+		If Not FileId
+			DebuggerWarning("Failed to open given locale file: " + FilePath$)
+			ProcedureReturn #False
+		EndIf
 	EndIf
 	
-	; Loading non-json from file
-
+	;}
+	;- > Parsing locale file data
+	;{
 	
 	Group$ = #Null$
 	
-	While Not Eof(FileId)
-		Line$  = ReadString(FileId)
-		Line$ = Trim(Line$)
+	If LocalizerOptions & #LOADING_MODE_JSON
+		; Loading Json from file
 		
-		If Line$ = #Null$
-			Continue
-		EndIf
+		; TODO: Insert stuff here
 		
-		Select Left(Line$, 1)
-			Case "#"
-			Case "_"
+		FreeJSON(JsonId)
+	Else
+		; Loading non-json from file
+		
+		; This whole loop is more or less the same as the one above except for some
+		;  instructions that were removed since the DataSection is no longer used at this point.
+		While Not Eof(FileId)
+			Line$ = Trim(ReadString(FileId))
+			
+			If Line$ = #Null$
 				Continue
-			Case "["
-				If LocalizerOptions & #LOCALIZING_MODE_GROUPED
-					Group$ = LTrim(RTrim(Line$, "]"), "[")
-					GetLanguageGroupIndex(Group$)
-				EndIf
-				Continue
-			Default
-				; Just checking if the Group$ variable is defined and if not, a group will
-				;  be created, or -1 will be returned if the correct flag was set.
-				If Group$ = #Null$
-					If LocalizerOptions & #LOADING_MODE_NONULLGROUP
-						DebuggerWarning("A null group was used to register an entry. (loc-?.? second loop)")
+			EndIf
+			
+			Select Left(Line$, 1)
+				Case "#"
+				Case "_"
+					Continue
+				Case "["
+					If LocalizerOptions & #LOCALIZING_MODE_GROUPED
+						Group$ = LTrim(RTrim(Line$, "]"), "[")
+						GetLanguageGroupIndex(Group$)
+					EndIf
+					Continue
+				Default
+					; Just checking if the Group$ variable is defined and if not, a group will
+					;  be created, or -1 will be returned if the correct flag was set.
+					If Group$ = #Null$
+						If LocalizerOptions & #LOADING_MODE_NONULLGROUP
+							DebuggerWarning("A null group was used to register an entry. (loc-?.? second loop)")
+							ProcedureReturn #False
+						EndIf
+						
+						; "Defining" Group$ and creating a group to avoid writing stuff in an empty list.
+						Group$ = #LOCALIZER_DEFAULT_GROUP
+						GetLanguageGroupIndex(Group$)
+					EndIf
+					
+					; "Parsing" the entry
+					Key$ = Trim(Left(Line$, FindString(Line$, "=")-1))
+					Value$ = Trim(Right(Line$, Len(Line$) - FindString(Line$, "=")))
+					
+					; Getting the group from the key if using the dotted notation.
+					If LocalizerOptions & #LOCALIZING_MODE_DOTTED And FindString(Key$, ".")
+						; Searching for the last dot in the key, if any, to divide the Group and key.
+						LastDotPosition.b = 1
+						Repeat
+							_TmpIndex = FindString(Key$, ".", LastDotPosition)
+							If LastDotPosition <> _TmpIndex
+								LastDotPosition = _TmpIndex
+							Else
+								Break
+							EndIf
+						ForEver
+						
+						Group$ = Trim(Left(Key$, LastDotPosition-1))
+						Key$ = Trim(Right(Key$, Len(Key$) - LastDotPosition))
+						
+						If LanguageGroups()\GroupName$ <> Group$
+							If GetLanguageGroupIndex(Group$) = -1
+								DebuggerWarning("error, too lazy. (loc-1.1 SL)")
+								ProcedureReturn #False
+							EndIf
+						EndIf
+					EndIf
+					
+					If Key$ = #Null$
+						DebuggerWarning("An entry key was null. (loc-1.2 SL)")
 						ProcedureReturn #False
 					EndIf
 					
-					; "Defining" Group$ and creating a group to avoid writing stuff in an empty list.
-					Group$ = #LOCALIZER_DEFAULT_GROUP
-					GetLanguageGroupIndex(Group$)
-				EndIf
-				
-				; "Parsing" the entry
-				Key$ = Trim(Left(Line$, FindString(Line$, "=")-1))
-				Value$ = Trim(Right(Line$, Len(Line$) - FindString(Line$, "=")))
-				
-				; Getting the group from the key if using the dotted notation.
-				If LocalizerOptions & #LOCALIZING_MODE_DOTTED And FindString(Key$, ".")
-					; Searching for the last dot in the key, if any, to divide the Group and key.
-					LastDotPosition.b = 1
-					Repeat
-						_TmpIndex = FindString(Key$, ".", LastDotPosition)
-						If LastDotPosition <> _TmpIndex
-							LastDotPosition = _TmpIndex
-						Else
-							Break
-						EndIf
-					ForEver
-					
-					Group$ = Trim(Left(Key$, LastDotPosition-1))
-					Key$ = Trim(Right(Key$, Len(Key$) - LastDotPosition))
-					
-					If LanguageGroups()\GroupName$ <> Group$
-						If GetLanguageGroupIndex(Group$) = -1
-							DebuggerWarning("error, too lazy. (loc-1.1 SL)")
-							ProcedureReturn #False
-						EndIf
-					EndIf
-				EndIf
-				
-				If Key$ = #Null$
-					DebuggerWarning("An entry key was null. (loc-1.2 SL)")
-					ProcedureReturn #False
-				EndIf
-				
-				; Saving the entry
-				LanguageGroups()\LocalizedStrings(Key$) = Value$
-		EndSelect
-	Wend
+					; Saving the entry
+					LanguageGroups()\LocalizedStrings(Key$) = Value$
+			EndSelect
+		Wend
+		
+		CloseFile(FileId)
+	EndIf
 	
-	; Loading Json from file
-	; Will be added later.
+	;}
 	
-	CloseFile(FileId)
 	ProcedureReturn #True
 EndProcedure
 
 ; Returns the localized String or FallBackValue$ in case of an error.
 Procedure.s Localize(Group$="", Key$="", FallBackValue$=#LOCALIZER_ERROR_STRING)
 	If Not LocalizerOptions
-		; Error, nothing has been loaded
-		DebuggerWarning("A attempt to localize a string before calling LoadLanguage() was made, returning #Null$.")
-		ProcedureReturn #Null$
+		DebuggerWarning("An attempt to localize a string before succesfully calling LoadLanguage() was made, returning the fallback value.")
+		ProcedureReturn FallBackValue$
 	EndIf
 	
 	If Key$ = #Null$
-		DebuggerWarning("A null key was used in Localize()'s Key$ parameter.")
+		DebuggerWarning("A null value was used in Localize()'s Key$ parameter, returning the fallback value.")
 		ProcedureReturn FallBackValue$
 	EndIf
 	
@@ -358,6 +388,8 @@ Procedure DebugLocalizer()
 		Next
 	Wend
 EndProcedure
+
+;Procedure SaveCurrentLocale(FilePath$, Overwrite.b=#False)
 
 ;}
 
@@ -390,10 +422,7 @@ DataSection
 	Data$ "123 = numbers"
 	Data$ "group.key = content"
 	Data$ #LOCALIZER_DATASECTION_END
-	
 EndDataSection
-
-
 
 ;
 ;- Unit Tests & Examples
@@ -414,10 +443,10 @@ EndDataSection
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 330
-; FirstLine = 350
-; Folding = --
+; CursorPosition = 136
+; FirstLine = 123
+; Folding = ---
 ; EnableXP
 ; CompileSourceDirectory
-; EnableCompileCount = 55
+; EnableCompileCount = 57
 ; EnableBuildCount = 0
