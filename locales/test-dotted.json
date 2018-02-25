@@ -1,0 +1,11 @@
+﻿{
+	"title" = "Program Title",
+
+	"# These will have a group (The [group] lines won't have any effect here)" = "",
+	"ui.button.cancel" = "Cancel",
+	"ui.button.back" = "Back",
+	"ui.button.next" = "Next",
+	
+	"ui.label.string1" = "My label",
+	"ui.label.string2" = "Hello World"
+}

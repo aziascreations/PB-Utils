@@ -1,14 +1,16 @@
-﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - UUID4                                 ║ v1.1.0 ║
-; ╠═════════════════════════════════════════════════════════╩════════╣
-; ║                                                                  ║
-; ║   ???                                                            ║
-; ║                                                                  ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Requirements: PB v5.60+ (Not tested with previous versions)      ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Source: http://www.purebasic.fr/english/viewtopic.php?t=38008    ║
-; ╚══════════════════════════════════════════════════════════════════╝
+﻿; ╔═══════════════════════════════════════════════════════════════════╦════════╗
+; ║ Purebasic Utils - UUID4                                           ║ v1.1.0 ║
+; ╠═══════════════════════════════════════════════════════════════════╩════════╣
+; ║                                                                            ║
+; ║   ???                                                                      ║
+; ║                                                                            ║
+; ╟────────────────────────────────────────────────────────────────────────────╢
+; ║ Requirements: PB v5.60+ (Not tested on previous versions)                  ║
+; ╟────────────────────────────────────────────────────────────────────────────╢
+; ║ Source: http://www.purebasic.fr/english/viewtopic.php?t=38008              ║
+; ╟────────────────────────────────────────────────────────────────────────────╢
+; ║ Documentation: https://github.com/aziascreations/PB-Utils/wiki/UUID4       ║
+; ╚════════════════════════════════════════════════════════════════════════════╝
 
 ;
 ;- Compiler Options
@@ -18,8 +20,6 @@
 ;EnableExplicit
 
 ;}
-
-;
 ;- Variables & Constants
 ;{
 
@@ -41,8 +41,6 @@ If Not CreateRegularExpression(#REGEX_ID_UUID4, #REGEX_UUID4)
 EndIf
 
 ;}
-
-;
 ;- Procedures
 ;{
 
@@ -75,8 +73,6 @@ Procedure IsUUID4Compliant(uuid4$)
 EndProcedure
 
 ;}
-
-;
 ;- Unit Tests & Examples
 ;{
 
@@ -108,7 +104,6 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 1
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory

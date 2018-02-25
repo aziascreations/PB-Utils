@@ -1,14 +1,16 @@
-﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - UUID4                                 ║ v1.1.0 ║
-; ╠═════════════════════════════════════════════════════════╩════════╣
-; ║                                                                  ║
-; ║   ???                                                            ║
-; ║                                                                  ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Requirements: PB v5.60+ (Not tested with previous versions)      ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Source: http://www.purebasic.fr/english/viewtopic.php?t=38008    ║
-; ╚══════════════════════════════════════════════════════════════════╝
+﻿; ╔═══════════════════════════════════════════════════════════════════╦════════╗
+; ║ Purebasic Utils - UUID4 (Module Version)                          ║ v1.1.0 ║
+; ╠═══════════════════════════════════════════════════════════════════╩════════╣
+; ║                                                                            ║
+; ║   ???                                                                      ║
+; ║                                                                            ║
+; ╟────────────────────────────────────────────────────────────────────────────╢
+; ║ Requirements: PB v5.60+ (Not tested on previous versions)                  ║
+; ╟────────────────────────────────────────────────────────────────────────────╢
+; ║ Source: http://www.purebasic.fr/english/viewtopic.php?t=38008              ║
+; ╟────────────────────────────────────────────────────────────────────────────╢
+; ║ Documentation: https://github.com/aziascreations/PB-Utils/wiki/UUID4       ║
+; ╚════════════════════════════════════════════════════════════════════════════╝
 
 ;
 ;- Module (Public)
@@ -42,11 +44,8 @@ DeclareModule UUID4
 EndDeclareModule
 
 ;}
-
-;
 ;- Module (Private)
 ;{
-
 
 Module UUID4
 	;- Import code
@@ -99,8 +98,6 @@ Module UUID4
 EndModule
 
 ;}
-
-;
 ;- Unit Tests & Examples
 ;{
 
@@ -133,7 +130,7 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 1
+; CursorPosition = 13
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory
