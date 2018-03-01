@@ -10,8 +10,6 @@
 ; ║ Documentation: https://github.com/aziascreations/PB-Utils/wiki/Colors      ║
 ; ╚════════════════════════════════════════════════════════════════════════════╝
 
-; TODO: Add grey variants, 80,85,...
-
 ;
 ;- Macros
 ;{
@@ -212,6 +210,7 @@ EndMacro
 
 #COLOR_W98_Background = RGBHex($008080)
 
+; The following colors are based on Windows's Metro colors.
 ; https://colorlib.com/etc/metro-colors/
 #COLOR_Metro_LightGreen = RGBHex($99B433)
 #COLOR_Metro_Green = RGBHex($00A300)
@@ -224,12 +223,19 @@ EndMacro
 #COLOR_Metro_Teal = RGBHex($00ABA9)
 #COLOR_Metro_LigthBlue = RGBHex($EFF4FF)
 #COLOR_Metro_Blue = RGBHex($2D89EF)
-; Some are still missing
+#COLOR_Metro_DarkBlue = RGBHex($2B5797)
+#COLOR_Metro_Yellow = RGBHex($FFC40D)
+#COLOR_Metro_Orange = RGBHex($E3A21A) ; Looks more like a pissy brown than orange
+#COLOR_Metro_DarkOrange = RGBHex($DA532C)
+#COLOR_Metro_Red = RGBHex($EE1111)
+#COLOR_Metro_DarkRed = RGBHex($B91D47)
+#COLOR_Metro_White = RGBHex($FFFFFF)
 
 ;}
 ;- Colors - Shades of black
 ;{
 
+; I messed up the numbers, they will be added later.
 ; #COLOR_Grey_5  = RGBHex($0D0D0D) ; Rounded up from #C.C (12.75)
 ; #COLOR_Grey_10 = RGBHex($1A1A1A) ; Rounded up from #19.8 (25.5)
 ; #COLOR_Grey_15 = RGBHex($262626) ; Rounded down from #26.4 (38.25)
@@ -251,16 +257,18 @@ EndMacro
 ; #COLOR_Grey_95 = RGBHex($) ; 
 
 ;}
-;- Colors - ???
+;- Colors - Misc
 ;{
 
-; #COLOR_ = RGBHex($)
+; Fun fact of the day: On twitter, the genocidal fondation that is PETA used the color #BEEEEEF on their 
+;  twitter banner for quite some time, how ironic.
+#COLOR_MSC_PETA = RGBHex($BEEEEF)
 
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 258
-; Folding = G+
+; CursorPosition = 29
+; Folding = --
 ; EnableXP
 ; CompileSourceDirectory
 ; EnableCompileCount = 29
