@@ -30,18 +30,19 @@
 ;EnableExplicit
 
 ;}
-
-;
 ;- Variables, Structures & Constants
 ;{
 
 EnumerationBinary LocalizerOptions
 	#LOCALIZING_MODE_GROUPED
 	#LOCALIZING_MODE_DOTTED
+	
 	#LOADING_MODE_SEPARATED
 	#LOADING_MODE_JOINED
-	#LOADING_MODE_NONULLGROUP
 	#LOADING_MODE_JSON
+	
+	#LOADING_MODE_NONULLGROUP
+	#LOADING_MODE_RESETONLOAD
 EndEnumeration
 
 Structure LanguageGroup
@@ -62,8 +63,6 @@ Global LocalizerOptions.b = 0
 Global NewList LanguageGroups.LanguageGroup()
 
 ;}
-
-;
 ;- Procedures
 ;{
 
@@ -95,10 +94,32 @@ Procedure.b GetLanguageGroupIndex(GroupName$, CreateIfNotFound.b=#False)
 	ProcedureReturn ListIndex(LanguageGroups())
 EndProcedure
 
+; Reads the json in "JsonID" and parses it for the localizer.
+; It was separated in it's own procedure due to the fact that it might get called twice depending on the setup.
+Procedure ReadJsonLocale(JsonID.i)
+	If LocalizerOptions & #LOCALIZING_MODE_DOTTED
+		
+		NewMap Entries()
+		ExtractJSONMap(JsonID, Entries())
+		
+		ForEach Entries()
+			Debug MapKey(Entries()) + " -> " + Str(Entries())
+		Next
+		
+	Else ; #LOCALIZING_MODE_GROUPED implied
+		DebuggerError("Loading grouped locales from JSON isn't supported for the moment.")
+		ProcedureReturn #False
+	EndIf
+	
+	ProcedureReturn #True
+EndProcedure
+
 ; Returns a non-zero value if everything went correctly, more info is given in the debugger otherwise.
-Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED, LoadingMode.b=#LOADING_MODE_SEPARATED)
+Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED, LoadingMode.b=#LOADING_MODE_JOINED | #LOADING_MODE_RESETONLOAD) 
 	;- > Checking, cleaning and setting variables
 	;{
+	
+	; TODO: Use the #LOADING_MODE_RESETONLOAD constant to clean old locales if needed
 	
 	; Checking if at least one localizing mode is given
 	If Not (LocalizingMode & #LOCALIZING_MODE_GROUPED Or LocalizingMode & #LOCALIZING_MODE_DOTTED)
@@ -135,7 +156,7 @@ Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED
 	; Value used in the second lood (Replace Temp$ with this one later ?)
 	Protected Line$
 	; Same for these ones except the json, it is used after the 1st one if using json.
-	Protected FileId.i, JsonId.i
+	Protected FileId.i, JsonID.i
 	
 	;}
 	;- > ???
@@ -148,6 +169,7 @@ Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED
 		Read.s Temp$
 		
 		; Cleaning the string
+		; TODO: Might not be needed if you exit directly to the json parsing part.
 		Temp$ = Trim(Temp$)
 		
 		; Exiting loop if loading from json, done here to avoid "over-indentation" and to have some stuff already done.
@@ -229,7 +251,20 @@ Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED
 	
 	; Loading Json from DataSection
 	If LocalizerOptions & #LOADING_MODE_JSON
-		DebuggerWarning("unimplemented !")
+		JsonID = ParseJSON(#PB_Any, Temp$)
+		If Not JsonID
+			DebuggerWarning("Failed to parse given json from DataSection.")
+			DebuggerWarning(JSONErrorMessage()+" - L"+JSONErrorLine()+":"+JSONErrorPosition())
+			ProcedureReturn #False
+		EndIf
+		
+		If Not ReadJsonLocale(JsonID)
+			DebuggerWarning("An error occured while reading the JSON locale from the DataSetion !")
+			FreeJSON(JsonID)
+			ProcedureReturn #False
+		EndIf
+		
+		FreeJSON(JsonID)
 	EndIf
 	
 	;}
@@ -242,8 +277,8 @@ Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED
 	EndIf
 	
 	If LocalizerOptions & #LOADING_MODE_JSON
-		JsonId = LoadJSON(#PB_Any, FilePath$)
-		If Not JsonId
+		JsonID = LoadJSON(#PB_Any, FilePath$)
+		If Not JsonID
 			DebuggerWarning("Failed to open/parse given json locale file: " + FilePath$)
 			DebuggerWarning(JSONErrorMessage()+" - L"+JSONErrorLine()+":"+JSONErrorPosition())
 			ProcedureReturn #False
@@ -265,9 +300,13 @@ Procedure.b LoadLanguage(FilePath$="", LocalizingMode.b=#LOCALIZING_MODE_GROUPED
 	If LocalizerOptions & #LOADING_MODE_JSON
 		; Loading Json from file
 		
-		; TODO: Insert stuff here
+		If Not ReadJsonLocale(JsonID)
+			DebuggerWarning("An error occured while reading the JSON from the given file: "+FilePath$)
+			FreeJSON(JsonID)
+			ProcedureReturn #False
+		EndIf
 		
-		FreeJSON(JsonId)
+		FreeJSON(JsonID)
 	Else
 		; Loading non-json from file
 		
@@ -377,7 +416,7 @@ EndProcedure
 
 ; Prints the content of LanguageGroups() in the debugger.
 Procedure DebugLocalizer()
-	Debug "LanguageGroups() Dump:"
+	Debug "LanguageGrooups() Dump:"
 	
 	ResetList(LanguageGroups())
 	While NextElement(LanguageGroups())
@@ -393,8 +432,9 @@ EndProcedure
 
 ;}
 
-LoadLanguage("./locales/test1.txt", #LOCALIZING_MODE_GROUPED, #LOADING_MODE_JOINED)
-;LoadLanguage("./locales/test1.txt", #LOCALIZING_MODE_DOTTED, #LOADING_MODE_JOINED)
+LoadLanguage("../locales/test-dotted.json", #LOCALIZING_MODE_DOTTED, #LOADING_MODE_JSON | #LOADING_MODE_JOINED | #LOADING_MODE_RESETONLOAD)
+;LoadLanguage("../locales/test1.txt", #LOCALIZING_MODE_GROUPED, #LOADING_MODE_JOINED)
+;LoadLanguage("../locales/test1.txt", #LOCALIZING_MODE_DOTTED, #LOADING_MODE_JOINED)
 Debug ""
 DebugLocalizer()
 Debug ""
@@ -405,22 +445,10 @@ Debug Localize("Test1", #Null$)
 
 DataSection
 	Language:
-	Data$ "default = stuff"
-	Data$ "[Test1]"
-	Data$ "hello = world"
-	Data$ "123 = numbers"
+	Data$ "{}"
 	Data$ #LOCALIZER_DATASECTION_END
 	
-	;Language:
-	Data$ "cat1.abc = hello"
-	Data$ "cat1.def = world"
-	Data$ "cat2.1 = abc"
-	Data$ "cat3.1 = abc"
-	Data$ "cat4.0 = abc"
-	Data$ "[Test1]"
-	Data$ ".hello = world"
-	Data$ "123 = numbers"
-	Data$ "group.key = content"
+	Data$ "default = stuff"
 	Data$ #LOCALIZER_DATASECTION_END
 EndDataSection
 
@@ -443,10 +471,10 @@ EndDataSection
 ;}
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 136
-; FirstLine = 123
+; CursorPosition = 438
+; FirstLine = 420
 ; Folding = ---
 ; EnableXP
 ; CompileSourceDirectory
-; EnableCompileCount = 57
+; EnableCompileCount = 59
 ; EnableBuildCount = 0
