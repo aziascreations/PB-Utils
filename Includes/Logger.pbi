@@ -1,12 +1,21 @@
-﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Simple Logger                         ║ v1.0.0 ║
-; ╠═════════════════════════════════════════════════════════╩════════╣
-; ║                                                                  ║
-; ║   ...                                                            ║
-; ║                                                                  ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Requirements: PB v5.60+ (Not tested with previous versions)      ║
-; ╚══════════════════════════════════════════════════════════════════╝
+﻿;{- Code Header
+; ==- Basic Info -================================
+;         Name: Logger.pbi
+;      Version: 1.0.0
+;       Author: Herwin Bozet
+;  Create date: ‎27 ‎October ‎2017, ‏‎01:58:13
+; 
+;  Description: ???
+; 
+; ==- Compatibility -=============================
+;  Compiler version: PureBasic 5.62 (x64) (Other versions untested)
+;  Operating system: Windows (Other platforms untested)
+; 
+; ==- Links & License -===========================
+;   Github: https://github.com/aziascreations/PB-Utils
+;  License: Apache V2
+; 
+;}
 
 ; TODO: Add option to enable/disable (override) fatal error MB thingy
 
@@ -216,9 +225,8 @@ CompilerIf #PB_Compiler_IsMainFile
 CompilerEndIf
 ;}
 
-; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 16
-; FirstLine = 6
-; Folding = PCH5
+; IDE Options = PureBasic 5.62 (Windows - x64)
+; CursorPosition = 17
+; Folding = fEOw-
 ; EnableXP
 ; CompileSourceDirectory

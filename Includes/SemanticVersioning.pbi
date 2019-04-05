@@ -1,14 +1,22 @@
-﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Semantic Versionning                  ║ v1.0.1 ║
-; ╠═════════════════════════════════════════════════════════╩════════╣
-; ║ Requirements: * PB v5.60+ (Not tested with previous versions)    ║
-; ║               * Strings.pb 1.3.0+ (From this set of utils)       ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Enumerations: * Regex (RegexID)                                  ║
-; ║               * ErrorCode                                        ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Ressource: https://semver.org/                                   ║
-; ╚══════════════════════════════════════════════════════════════════╝
+﻿;{- Code Header
+; ==- Basic Info -================================
+;         Name: SemanticVersionning.pbi
+;      Version: 1.0.1
+;       Author: Herwin Bozet
+;  Create date: ‎2 ‎February ‎2018, ‏‎13:05:32
+; 
+;  Description: ???
+; 
+; ==- Compatibility -=============================
+;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Operating system: Windows (Other platforms untested)
+; 
+; ==- Links & License -===========================
+;   Github: https://github.com/aziascreations/PB-Utils
+;     Doc.: https://semver.org/
+;  License: Apache V2
+; 
+;}
 
 ; This will only be a basic semantic versioning checker since I don't want
 ;  to have to check the parts after the minus sign because dumb users can
@@ -254,9 +262,11 @@ CompilerEndIf
 
 ;}
 
-; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 85
-; FirstLine = 67
-; Folding = --
+; IDE Options = PureBasic 5.62 (Windows - x64)
+; CursorPosition = 17
+; FirstLine = 3
+; Folding = ---
 ; EnableXP
 ; CompileSourceDirectory
+; EnableCompileCount = 0
+; EnableBuildCount = 0
