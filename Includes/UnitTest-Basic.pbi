@@ -1,12 +1,21 @@
-﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Unit Test - Basic                     ║ v1.1.0 ║
-; ╠═════════════════════════════════════════════════════════╩════════╣
-; ║                                                                  ║
-; ║   ???                                                            ║
-; ║                                                                  ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Requirements: PB v5.60+ (Not tested with previous versions)      ║
-; ╚══════════════════════════════════════════════════════════════════╝
+﻿;{- Code Header
+; ==- Basic Info -================================
+;         Name: UnitTest-Basic.pbi
+;      Version: 1.1.0
+;       Author: Herwin Bozet & Demivec
+;  Create date: ‎‎27 ‎October ‎2017, ‏‎01:25:46
+; 
+;  Description: ???
+; 
+; ==- Compatibility -=============================
+;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Operating system: Windows (Other platforms untested)
+; 
+; ==- Links & License -===========================
+;   Github: https://github.com/aziascreations/PB-Utils
+;  License: Apache V2
+; 
+;}
 
 ;TODO?: Add a EndUnitTesting procedure that prints the number of failed and passed tests
 
@@ -72,8 +81,8 @@ EndProcedure
 
 ;}
 
-; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 10
+; IDE Options = PureBasic 5.62 (Windows - x64)
+; CursorPosition = 16
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory

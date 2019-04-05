@@ -1,16 +1,22 @@
-﻿; ╔═══════════════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - UUID4 (Module Version)                          ║ v1.1.0 ║
-; ╠═══════════════════════════════════════════════════════════════════╩════════╣
-; ║                                                                            ║
-; ║   ???                                                                      ║
-; ║                                                                            ║
-; ╟────────────────────────────────────────────────────────────────────────────╢
-; ║ Requirements: PB v5.60+ (Not tested on previous versions)                  ║
-; ╟────────────────────────────────────────────────────────────────────────────╢
-; ║ Source: http://www.purebasic.fr/english/viewtopic.php?t=38008              ║
-; ╟────────────────────────────────────────────────────────────────────────────╢
-; ║ Documentation: https://github.com/aziascreations/PB-Utils/wiki/UUID4       ║
-; ╚════════════════════════════════════════════════════════════════════════════╝
+﻿;{- Code Header
+; ==- Basic Info -================================
+;         Name: UUID4.pbi
+;      Version: 1.1.0
+;       Author: Herwin Bozet
+;  Create date: ‎11 ‎February ‎2018, ‏‎21:13:39
+; 
+;  Description: ???
+; 
+; ==- Compatibility -=============================
+;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Operating system: Windows (Other platforms untested)
+; 
+; ==- Links & License -===========================
+;   Github: https://github.com/aziascreations/PB-Utils
+;     Doc.: https://github.com/aziascreations/PB-Utils/wiki/UUID4
+;  License: Apache V2
+; 
+;}
 
 ;
 ;- Module (Public)
@@ -129,9 +135,8 @@ CompilerEndIf
 
 ;}
 
-; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 13
-; Folding = --
+; IDE Options = PureBasic 5.62 (Windows - x64)
+; Folding = ---
 ; EnableXP
 ; CompileSourceDirectory
 ; EnableCompileCount = 1
