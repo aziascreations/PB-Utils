@@ -1,14 +1,22 @@
-﻿; ╔═══════════════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Colors                                          ║ v1.0.0 ║
-; ╠═══════════════════════════════════════════════════════════════════╩════════╣
-; ║                                                                            ║
-; ║   A collection of 24bit colors constants and color related procedure(s).   ║
-; ║                                                                            ║
-; ╟────────────────────────────────────────────────────────────────────────────╢
-; ║ Requirements: PB v5.60+ (Not tested on previous versions)                  ║
-; ╟────────────────────────────────────────────────────────────────────────────╢
-; ║ Documentation: https://github.com/aziascreations/PB-Utils/wiki/Colors      ║
-; ╚════════════════════════════════════════════════════════════════════════════╝
+﻿;{- Code Header
+; ==- Basic Info -================================
+;         Name: Colors.pbi
+;      Version: 1.0.0
+;       Author: Herwin Bozet
+;  Create date: 24 ‎February ‎2018, ‏‎23:36:09
+; 
+;  Description: A collection of 24bit colors constants and color related procedure(s).
+; 
+; ==- Compatibility -=============================
+;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Operating system: Windows (Other platforms untested)
+; 
+; ==- Links & License -===========================
+;   Github: https://github.com/aziascreations/PB-Utils
+;     Doc.: https://github.com/aziascreations/PB-Utils/wiki/Colors
+;  License: Apache V2
+; 
+;}
 
 ;
 ;- Macros
@@ -266,8 +274,8 @@ EndMacro
 
 ;}
 
-; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 29
+; IDE Options = PureBasic 5.62 (Windows - x64)
+; CursorPosition = 20
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory

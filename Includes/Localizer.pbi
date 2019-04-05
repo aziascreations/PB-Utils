@@ -1,14 +1,22 @@
-﻿; ╔═══════════════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Localizer                                       ║ v0.0.4 ║
-; ╠═══════════════════════════════════════════════════════════════════╩════════╣
-; ║                                                                            ║
-; ║   ???                                                                      ║
-; ║                                                                            ║
-; ╟────────────────────────────────────────────────────────────────────────────╢
-; ║ Requirements: PB v5.60+ (Not tested on previous versions)                  ║
-; ╟────────────────────────────────────────────────────────────────────────────╢
-; ║ Documentation: https://github.com/aziascreations/PB-Utils/wiki/Localizer   ║
-; ╚════════════════════════════════════════════════════════════════════════════╝
+﻿;{- Code Header
+; ==- Basic Info -================================
+;         Name: Localizer.pbi
+;      Version: 0.0.4
+;       Author: Herwin Bozet
+;  Create date: ‎11 ‎February ‎2018, ‏‎21:13:39
+; 
+;  Description: ???
+; 
+; ==- Compatibility -=============================
+;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Operating system: Windows (Other platforms untested)
+; 
+; ==- Links & License -===========================
+;   Github: https://github.com/aziascreations/PB-Utils
+;     Doc.: https://github.com/aziascreations/PB-Utils/wiki/Localizer
+;  License: Apache V2
+; 
+;}
 
 ; TODO: Check if ClearStructure must be used when loading languages over and over.
 ; http://www.purebasic.fr/english/viewtopic.php?f=7&t=41990
@@ -470,9 +478,7 @@ EndDataSection
 
 ;}
 
-; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 438
-; FirstLine = 420
+; IDE Options = PureBasic 5.62 (Windows - x64)
 ; Folding = ---
 ; EnableXP
 ; CompileSourceDirectory

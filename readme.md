@@ -1,4 +1,7 @@
 # Purebasic Utils
+This repository contains a small collection of utilities designed to help you with specific tasks in PureBasic.
+
+# Purebasic Utils
 A small collection of utilities designed to help you in [programming in PB ?].<br>
 
 **Disclaimer:**<br>

@@ -1,10 +1,25 @@
-﻿; ╔═════════════════════════════════════════════════════════╦════════╗
-; ║ Purebasic Utils - Strings                               ║ v1.3.0 ║
-; ╠═════════════════════════════════════════════════════════╩════════╣
-; ║ Requirements: PB v5.60+ (Not tested with previous versions)      ║
-; ╟──────────────────────────────────────────────────────────────────╢
-; ║ Sources: See the comments of each procedure                      ║
-; ╚══════════════════════════════════════════════════════════════════╝
+﻿;{- Code Header
+; ==- Basic Info -================================
+;         Name: Strings.pbi
+;      Version: 1.3.1
+;       Author: Herwin Bozet & Demivec
+;  Create date: ‎‎22 ‎October ‎2017, ‏‎04:37:04
+; 
+;  Description: ???
+; 
+; ==- Compatibility -=============================
+;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Operating system: Windows (Other platforms untested)
+; 
+; ==- Credits -===================================
+;  Demivec: ExplodeStringToArray(...)
+;           http://www.purebasic.fr/english/viewtopic.php?f=13&t=41704
+; 
+; ==- Links & License -===========================
+;   Github: https://github.com/aziascreations/PB-Utils
+;  License: Apache V2
+; 
+;}
 
 ;
 ;- Compiler Options
@@ -12,6 +27,15 @@
 
 ; The following line is only use to see if it works with it and for debugging
 ;EnableExplicit
+
+;}
+
+;
+;- Constants
+;{
+
+; TODO: Add more
+#BOM_UTF8 = $FEFF
 
 ;}
 
@@ -42,16 +66,15 @@ EndProcedure
 
 ; Returns: Nonzero if a$ is equal to #Null$ or is filled with spaces.
 Procedure.b IsNullOrEmpty(a$)
-	;ProcedureReturn Bool(a$ = #Null$ Or Not Len(ReplaceString(a$, " ", "")))
-	ProcedureReturn Bool(Trim(GroupName$) = #Null$)
+	ProcedureReturn Bool(Trim(a$) = #Null$)
 EndProcedure
 
-Procedure.s Format(text.s, *val1 = 0, *val2 = 0, *val3 = 0, *val4 = 0, *val5 = 0, *val6 = 0, *val7 = 0, *val8 = 0, *val9 = 0, *val10 = 0, *val11 = 0 )
-	
-	;http://www.purebasic.fr/english/viewtopic.php?t=32026
-	
-	ProcedureReturn #Null$
-EndProcedure
+; Procedure.s Format(text.s, *val1 = 0, *val2 = 0, *val3 = 0, *val4 = 0, *val5 = 0, *val6 = 0, *val7 = 0, *val8 = 0, *val9 = 0, *val10 = 0, *val11 = 0 )
+; 	
+; 	;http://www.purebasic.fr/english/viewtopic.php?t=32026
+; 	
+; 	ProcedureReturn #Null$
+; EndProcedure
 
 ;}
 
@@ -96,9 +119,8 @@ CompilerEndIf
 
 ;}
 
-; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 45
-; FirstLine = 33
+; IDE Options = PureBasic 5.62 (Windows - x64)
+; CursorPosition = 18
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory
