@@ -1,7 +1,7 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: Endianness.pbi
-;      Version: 1.0.1
+;      Version: 1.0.2
 ;      Authors: Herwin Bozet & djes
 ;  Create date: 9 June ‎2019, 21:04:51
 ; 
@@ -33,6 +33,7 @@
 ; If your variable is explicitely typed, it shouldn't be a problem, but you should still use the correct one.
 ;
 ; Each of the procedures in this include uses the RAX register and its parts (EAX, AX, AL, AH).
+; And in the case of "EndianSwapQ(...)" on x86, the EDX register is used.
 ; Keep this in mind if you call them while using ASM !
 
 
@@ -190,33 +191,25 @@ CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
 	
 	; Note: The xmm registers should be able to hold a quad on both x86 and x64, it might be a good idea to check it.
 	
+	; Note: The stack could have technically been used to leave EDX untouched, but when I used it,
+	;        the "ProcedureReturn" kept throwing an "Invalid memory access" error.
+	
 	; BSWAP r32 -> Does the operation on the register itself.
 	; See: https://www.felixcloutier.com/x86/bswap
 	Procedure.q EndianSwapQ(Number.q)
-		Protected HalfLower.l = Number,
-		          HalfUpper.l = Number >> 32
-		
 		EnableASM
-		MOV eax, HalfUpper
-		BSWAP eax
-		MOV HalfUpper, eax
-		
-		MOV eax, HalfLower
-		BSWAP eax
-		MOV HalfLower, eax
+			MOV eax, dword [p.v_Number]
+			MOV edx, dword [p.v_Number+4]
+			
+	 		BSWAP eax
+	 		BSWAP edx
+	 		
+	 		MOV dword [p.v_Number+4], eax
+	 		MOV dword [p.v_Number], edx
 		DisableASM
-		
-		Number = HalfLower
-	 	Number << 32
-	 	Number | HalfUpper
 		
 		ProcedureReturn Number
 	EndProcedure
-	
-	; Note: I tried using edx, but it kept being overwritten when either assigning a variable or when doing some math.
-	
-	; I also tried the peek to poke in another variable method and it took ~1.2 time as long as this one.
-	; ~850ms/1M operations instead of ~700ms/1M operations.
 	
 CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
 	
@@ -224,9 +217,9 @@ CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
 	; See: https://www.felixcloutier.com/x86/bswap
 	Procedure.q EndianSwapQ(Number.q)
 		EnableASM
-		MOV rdx, Number
-		BSWAP rdx
-		MOV Number, rdx
+			MOV rdx, Number
+			BSWAP rdx
+			MOV Number, rdx
 		DisableASM
 		
 		ProcedureReturn Number
@@ -324,8 +317,8 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.62 (Windows - x64)
-; CursorPosition = 204
-; FirstLine = 194
+; CursorPosition = 195
+; FirstLine = 191
 ; Folding = ----
 ; EnableXP
 ; Compiler = PureBasic 5.62 (Windows - x86)
