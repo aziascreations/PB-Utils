@@ -14,7 +14,7 @@
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://github.com/aziascreations/PB-Utils/wiki/Localizer
-;  License: Apache V2
+;  License: WTFPL
 ; 
 ;}
 

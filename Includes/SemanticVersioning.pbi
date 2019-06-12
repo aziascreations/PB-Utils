@@ -14,7 +14,7 @@
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://semver.org/
-;  License: Apache V2
+;  License: WTFPL
 ; 
 ;}
 

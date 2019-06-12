@@ -14,11 +14,12 @@
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://github.com/aziascreations/PB-Utils/wiki/UUID4
-;  License: Apache V2
+;  License: WTFPL
 ; 
 ;}
 
 ; TODO: Add a generate UUID4 Buffer 
+; TODO: Add a parameter to use SecureRandom(...)
 
 ;
 ;- Compiler Options
@@ -120,6 +121,8 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.62 (Windows - x64)
+; CursorPosition = 21
+; FirstLine = 16
 ; Folding = --
 ; EnableXP
 ; CompileSourceDirectory

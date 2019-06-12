@@ -13,7 +13,7 @@
 ; 
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
-;  License: Apache V2
+;  License: WTFPL
 ; 
 ;}
 

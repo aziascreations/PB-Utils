@@ -17,7 +17,7 @@
 ; 
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
-;  License: Apache V2
+;  License: WTFPL
 ; 
 ; ==- Documentation -=============================
 ;  See each procedures for a link to the relevant x86/x64 ASM instruction(s).
@@ -35,6 +35,15 @@
 ; Each of the procedures in this include uses the RAX register and its parts (EAX, AX, AL, AH).
 ; And in the case of "EndianSwapQ(...)" on x86, the EDX register is used.
 ; Keep this in mind if you call them while using ASM !
+
+; ROL r8/m8 -> Similar to a shift, but the bits loop
+; https://www.aldeid.com/wiki/X86-assembly/Instructions/rol
+
+; XCHG r8, r8 -> Where both r8 are parts of r16 -> (ax = al+ah)
+; See: https://c9x.me/x86/html/file_module_x86_id_328.html
+
+; BSWAP r32/r64 -> Does the operation on the register itself.
+; See: https://www.felixcloutier.com/x86/bswap
 
 
 ;
@@ -77,8 +86,6 @@ EndMacro
 
 ;-> 1 Byte (B/A) (Nibble inverters)
 
-; ROL r8/m8 -> Similar to a shift, but the bits loop
-; https://www.aldeid.com/wiki/X86-assembly/Instructions/rol
 Procedure.b NibbleSwapB(Number.b)
 	EnableASM
 		ROL Number, 4
@@ -98,8 +105,6 @@ EndProcedure
 
 ;-> 2 Bytes (W/U)
 
-; XCHG r8, r8 -> Where both r8 are parts of r16 -> (ax = al+ah)
-; See: https://c9x.me/x86/html/file_module_x86_id_328.html
 Procedure.w EndianSwapW(Number.w)
 	EnableASM
 		MOV ax,Number
@@ -129,9 +134,6 @@ EndProcedure
 ; Improvement(s) made:
 ; * EAX Register returned directly -> MAY save a couple of cycles if the compiler doesn't optimize it already.
 ;                                     It does, it goes from ~687-690ms/1M calls to ~635ms/1M calls.
-
-; BSWAP r32 -> Does the operation on the register itself.
-; See: https://www.felixcloutier.com/x86/bswap
 Procedure.l EndianSwapL(Number.l)
 	EnableASM
 		MOV eax,Number
@@ -149,8 +151,6 @@ EndProcedure
 ; And since x64 has 64bit registers while x86 doesn't, they have to be different.
 CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
 	
-	; BSWAP r32 -> Does the operation on the register itself.
-	; See: https://www.felixcloutier.com/x86/bswap
 	Procedure.i EndianSwapI(Number.i)
 		EnableASM
 			MOV eax, Number
@@ -161,8 +161,6 @@ CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
 	
 CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
 	
-	; BSWAP r64 -> Does the operation on the register itself.
-	; See: https://www.felixcloutier.com/x86/bswap
 	Procedure.i EndianSwapI(Number.i)
 		EnableASM
 			MOV rax, Number
@@ -182,6 +180,7 @@ CompilerEndIf
 
 ; MOVBE could have been used, but the compiler kept giving a syntax error for some reason :/
 ; See: https://www.felixcloutier.com/x86/movbe
+; TODO: Check again since using "!" can fix this issue.
 ; Same thing with MOVSS and other SSE2 MOV ops with xmm regs.
 
 ; EndianSwapQ(Number.q)
@@ -189,13 +188,12 @@ CompilerEndIf
 ;  in its registers.
 CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
 	
-	; Note: The xmm registers should be able to hold a quad on both x86 and x64, it might be a good idea to check it.
+	; Note: A version of this procedure that uses xmm registers and SSE2 instructions can be made to suit both
+	;        x86 and x64, but the performances would likely take a hit. (~8 instructions with XMM regs.)
 	
 	; Note: The stack could have technically been used to leave EDX untouched, but when I used it,
 	;        the "ProcedureReturn" kept throwing an "Invalid memory access" error.
 	
-	; BSWAP r32 -> Does the operation on the register itself.
-	; See: https://www.felixcloutier.com/x86/bswap
 	Procedure.q EndianSwapQ(Number.q)
 		EnableASM
 			MOV eax, dword [p.v_Number]
@@ -213,8 +211,6 @@ CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
 	
 CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
 	
-	; BSWAP r64 -> Does the operation on the register itself.
-	; See: https://www.felixcloutier.com/x86/bswap
 	Procedure.q EndianSwapQ(Number.q)
 		EnableASM
 			MOV rdx, Number
@@ -317,8 +313,8 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.62 (Windows - x64)
-; CursorPosition = 195
-; FirstLine = 191
+; CursorPosition = 203
+; FirstLine = 186
 ; Folding = ----
 ; EnableXP
 ; Compiler = PureBasic 5.62 (Windows - x86)
