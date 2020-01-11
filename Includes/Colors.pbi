@@ -3,22 +3,31 @@
 ;         Name: Colors.pbi
 ;      Version: 1.0.0
 ;       Author: Herwin Bozet
-;  Create date: 24 ‎February ‎2018, ‏‎23:36:09
+;  Create date: 24 February 2018, 23:36:09
 ; 
-;  Description: A collection of 24bit colors constants and color related procedure(s).
+;  Description: Collection of 24bit colors constants and color related macros.
 ; 
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Compiler version: PureBasic 5.60-5.70 (x86/x64)
 ;  Operating system: Windows (Other platforms untested)
 ; 
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
-;     Doc.: https://github.com/aziascreations/PB-Utils/wiki/Colors
+;     Doc.: https://github.com/aziascreations/PB-Utils/Documentation/Colors
 ;  License: WTFPL
 ; 
 ;}
 
-;
+
+;- Notes
+;{
+
+; Procedures:
+; > RGBToRGBA(Color.i)
+
+;}
+
+
 ;- Macros
 ;{
 
@@ -32,12 +41,9 @@ Macro RGBAHex(Color)
 	(Color >> 24) + ((Color >> 16) & 255) * 256 + ((Color >> 8) & 255) * 65536 + (Color & 255) * 16777216
 EndMacro
 
-; Procedures
-; Is a long variable ?
-; Procedure RGBToRGBA(Color.i)
-; EndProcedure
-
 ;}
+
+
 ;- Colors - CSS3
 ;{
 
@@ -213,6 +219,8 @@ EndMacro
 #COLOR_YellowGreen = RGBHex($9ACD32)
 
 ;}
+
+
 ;- Colors - Windows
 ;{
 
@@ -240,10 +248,11 @@ EndMacro
 #COLOR_Metro_White = RGBHex($FFFFFF)
 
 ;}
+
+
 ;- Colors - Shades of black
 ;{
 
-; I messed up the numbers, they will be added later.
 ; #COLOR_Grey_5  = RGBHex($0D0D0D) ; Rounded up from #C.C (12.75)
 ; #COLOR_Grey_10 = RGBHex($1A1A1A) ; Rounded up from #19.8 (25.5)
 ; #COLOR_Grey_15 = RGBHex($262626) ; Rounded down from #26.4 (38.25)
@@ -265,6 +274,8 @@ EndMacro
 ; #COLOR_Grey_95 = RGBHex($) ; 
 
 ;}
+
+
 ;- Colors - Misc
 ;{
 
@@ -274,9 +285,9 @@ EndMacro
 
 ;}
 
-; IDE Options = PureBasic 5.62 (Windows - x64)
-; CursorPosition = 20
-; Folding = --
+; IDE Options = PureBasic 5.70 LTS (Windows - x64)
+; CursorPosition = 37
+; Folding = 00
 ; EnableXP
 ; CompileSourceDirectory
 ; EnableCompileCount = 29

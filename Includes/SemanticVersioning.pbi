@@ -3,7 +3,7 @@
 ;         Name: SemanticVersionning.pbi
 ;      Version: 1.0.1
 ;       Author: Herwin Bozet
-;  Create date: ‎2 ‎February ‎2018, ‏‎13:05:32
+;  Create date: 2 February 2018, 13:05:32
 ; 
 ;  Description: ???
 ; 

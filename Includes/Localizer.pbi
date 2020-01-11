@@ -3,7 +3,7 @@
 ;         Name: Localizer.pbi
 ;      Version: 0.0.4
 ;       Author: Herwin Bozet
-;  Create date: ‎11 ‎February ‎2018, ‏‎21:13:39
+;  Create date: 11 February 2018, 21:13:39
 ; 
 ;  Description: ???
 ; 

@@ -3,7 +3,7 @@
 ;         Name: Strings.pbi
 ;      Version: 1.3.1
 ;       Author: Herwin Bozet & Demivec
-;  Create date: ‎‎22 ‎October ‎2017, ‏‎04:37:04
+;  Create date: 22 October 2017, 04:37:04
 ; 
 ;  Description: ???
 ; 

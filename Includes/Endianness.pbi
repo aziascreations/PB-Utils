@@ -2,8 +2,8 @@
 ; ==- Basic Info -================================
 ;         Name: Endianness.pbi
 ;      Version: 1.0.2
-;      Authors: Herwin Bozet & djes
-;  Create date: 9 June ‎2019, 21:04:51
+;      Authors: Herwin Bozet
+;  Create date: 9 June 2019, 21:04:51
 ; 
 ;  Description: A set of procedure that allow you to swap the endianness of a variable easily.
 ; 
@@ -12,7 +12,7 @@
 ;  Operating system: Windows 10 (Other platforms untested)
 ; 
 ; ==- Credits -===================================
-;  djes: Original EndianSwapW(Number.l) procedure
+;  djes: Original EndianSwapL(Number.l) procedure
 ;        https://www.purebasic.fr/english/viewtopic.php?f=19&t=17427
 ; 
 ; ==- Links & License -===========================
@@ -21,6 +21,7 @@
 ; 
 ; ==- Documentation -=============================
 ;  See each procedures for a link to the relevant x86/x64 ASM instruction(s).
+;  + desc, and link back to the readme in the repo.
 ;
 ;}
 
@@ -47,10 +48,10 @@
 
 
 ;
-;- Compiler Options
+;- Compiler Directives
 ;{
 
-; The following line is only used to see if it works with it and for debugging.
+; The following line is only used to see if it works with it enabled, and for debugging.
 ;EnableExplicit
 
 ;}
@@ -312,9 +313,9 @@ CompilerEndIf
 
 ;}
 
-; IDE Options = PureBasic 5.62 (Windows - x64)
-; CursorPosition = 203
-; FirstLine = 186
+; IDE Options = PureBasic 5.70 LTS (Windows - x64)
+; CursorPosition = 59
+; FirstLine = 29
 ; Folding = ----
 ; EnableXP
 ; Compiler = PureBasic 5.62 (Windows - x86)

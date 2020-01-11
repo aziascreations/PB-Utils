@@ -3,7 +3,7 @@
 ;         Name: Logger.pbi
 ;      Version: 1.0.0
 ;       Author: Herwin Bozet
-;  Create date: ‎27 ‎October ‎2017, ‏‎01:58:13
+;  Create date: 27 October 2017, 01:58:13
 ; 
 ;  Description: ???
 ; 
