@@ -1,6 +1,6 @@
 # BasicTernary
 
-This include provides you with a set of procedures that act as a sort of ternary operator that allow.
+This include provides you with a set of procedures that act as a sort of ternary operator that allow [you to ...].
 
 [It is mostly helpful to save on line count]
 
@@ -40,7 +40,7 @@ A macro could have had better performances if it had been rediced to a simple if
 
 `IfW(Condition.b, TrueValue.w, FalseValue.w).w`
 
-&emsp;Each and everyone of these procedures will either return `TrueValue` or `FalseValue` depending on wether or not the boolean `Condition` is true or false.
+&emsp;Each and everyone of these procedures will either return the given `TrueValue` or `FalseValue` depending on wether or not the boolean `Condition` is true or false.
 
 &emsp;For the parameter `Condition.b`, you have to wrap your condition in a `Bool()` [call] to make sure it is passed as a boolean.
 

@@ -1,12 +1,11 @@
 # PureBasic Utils
 
-A collection of small includes that attempt to fix / [give access] to features that are not present in PureBasic by default.
+A collection of small includes that attempt to fix and give out access to features that are not present in PureBasic by default.
 
-[The doc for each include is included in the source code, as well as a special page for each one in the "IDK" folder]
+The documentation for each include is included in the source code itself, as well as on a dedicated page that is accessible with a link given in this readme and in the source code itself.
 
-[A link to those pages is also provided under each "???" in this readme.]
+If you want to consult the changelog, you can do so [here](changelog.md).
 
-[changelog section that links to a file that has all of the changes in it.]
 
 ## Summary
 
@@ -55,7 +54,7 @@ Contains a set of procedures and a macro that will swap the endianness or nibble
 The primary use for this include is to be able to interact with binary data without having to worry about [process of swapping] endianness.
 
 [📜 <sub>Documentation</sub>](Documentation/Endianness.md)&emsp;&emsp;
-[💾 <sub>Source Code</sub>](Includes/Endianness.pbi)<br>
+[💾 <sub>Source Code</sub>](Includes/Endianness.pbi)&emsp;&emsp;<!--[📥 <sub>Releases</sub>](Includes/Endianness.pbi)--><br>
 <br>
 
 
@@ -94,17 +93,18 @@ A procedure to generate it directly into a buffer is also planned.
 
 ## Remarks
 
-Some of the includes may declare constants and use some [enumeration ids]<br>
-More information about that can be found on the [respective documentation page] of the include.
+Some of the includes may declare constants and use some enumeration identifiers.<br>
+More information about these can be found on the respective documentation page of each include.
 
 
 ## Credits
-The original authors and posts are also mentionned and linked in the source files.
 
-<!--[Have been rewritten and "improced" to avoid dealing with license issues]-->
+The original authors and posts are also mentioned and linked in the source files.
+
+<!--[Have been rewritten and "improved" to avoid dealing with license issues]-->
 
 ● Demivec<br>
-&emsp;&emsp; ⚬ Strings - `ExplodeStringToArray(...)`
+&emsp;&emsp; ⚬ Strings - Original `ExplodeStringToArray(...)` procedure
 &emsp;([Thread](http://www.purebasic.fr/english/viewtopic.php?f=13&t=41704))<br>
 
 ● Mistrel<br>
@@ -123,7 +123,7 @@ This license applies to all the code in this repo, except for Demivec's `Explode
 [WTFPL](LICENSE)
 
 <!--
-Write the uuid 4 directly in a string buffer (A$ = Space(n) with RandomData(...)) 
+Write the uuid 4 directly in a string buffer (A$ = Space(n) with RandomData(...))
 Trash
 Note, use grip to view this readme locally.
  (📃📃 | 🧱🧱  💾 📜 🧾 📝)mod

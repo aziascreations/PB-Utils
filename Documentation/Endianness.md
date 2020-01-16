@@ -13,11 +13,11 @@ All the procedures in this include use ASM instructions which could cause proble
 
 The registers used are the `rax` family in every procedure, and the `rdx` family in `EndianSwapQ()`.
 
-And no constants or [enumeration id] were used.
+
+There are separate procedures made for the `.u` and `.a` types to avoid any potential problem that could happen if you use "EndianSwapW" when declaring an implicitely typed variable.
 
 
-There are [...] second procedure was specially made for and .u (and .a) variables to avoid any potential problem that could happen if you use "EndianSwapW" when declaring an implicitely typed variable.
-
+And no constants or enumeration identifiers were used in this include.
 
 ## Macro
 
@@ -53,7 +53,7 @@ There are [...] second procedure was specially made for and .u (and .a) variable
 
 ### 4/8 bytes
 
-<sup>*The byte length of the number will be affected by the architecture for which your program is compiled [for].*</sup><br>
+<sup>*The byte length of the number will be affected by the architecture for which your program is compiled against.*</sup><br>
 `EndianSwapI(Number.i).i`<br>
 &emsp;Returns the `integer` number given as `Number.i` with it's endianness swapped.<br>
 
@@ -69,10 +69,8 @@ There are [...] second procedure was specially made for and .u (and .a) variable
 
 A version of `EndianSwapQ()` that uses the SSE2 instruction set is available in the `Experiments/` folder as `EndianSwapQ_SSE.pbi`.
 
-[^ In the file/include named: _x_ ^]
+This include provides you with the procedure `EndianSwapQSSE(Number.q).q` which uses the `xmm0` and `xmm1` registers from the SSE2 instruction set.
 
-No speed test between the 2 version were done.
+It is a little bit slower than the one in the main include, taking ~210ms for a million swaps where the original x64 procedure takes ~185ms for the same amount of calls.
 
-It is also important to mention that this special version uses both the `xmm0` and `xmm1` registers.
-
-[The responsability falls on you to verify is the SSE2 instruction set is supported]
+Please keep in mind that it is also your responsability to check if the SSE2 instruction set is supported on the CPU your program is ran on.
