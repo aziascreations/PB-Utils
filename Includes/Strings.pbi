@@ -1,27 +1,24 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: Strings.pbi
-;      Version: 1.3.1
-;       Author: Herwin Bozet & Demivec
-;  Create date: ‎‎22 ‎October ‎2017, ‏‎04:37:04
-; 
+;      Version: 2.0.0
+;       Author: Herwin Bozet
+;  Create date: 22 October 2017, 04:37:04
+;
 ;  Description: ???
-; 
+;
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Compiler version: PureBasic 5.62-5.70 (x86/x64)
 ;  Operating system: Windows (Other platforms untested)
-; 
-; ==- Credits -===================================
-;  Demivec: ExplodeStringToArray(...)
-;           http://www.purebasic.fr/english/viewtopic.php?f=13&t=41704
-; 
+;
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
-;  License: Apache V2
-; 
+;     Doc.: https://github.com/aziascreations/PB-Utils/Documentation/Strings
+;  License: WTFPL
+;
 ;}
 
-;
+
 ;- Compiler Options
 ;{
 
@@ -30,99 +27,204 @@
 
 ;}
 
-;
-;- Constants
-;{
 
-; TODO: Add more
-#BOM_UTF8 = $FEFF
-
-;}
-
-;
 ;- Procedures
 ;{
 
-; Returns: The number of entries in the Array.
-; Source: http://www.purebasic.fr/english/viewtopic.php?f=13&t=41704
-Procedure ExplodeStringToArray(Array a$(1), s$, delimeter$, cleanString.b=#True)
-	If cleanString
-		s$ = Trim(s$, delimeter$)
-		
-		While FindString(s$, delimeter$+delimeter$)
-			s$ = ReplaceString(s$, delimeter$+delimeter$, delimeter$)
+; Returns the number of distinct entries in the given Array A$() and populates it with each part.
+Procedure.q SplitArrayToString(Array A$(1), StringToSplit$, Delimeter$, CleanString.b=#True)
+	Protected DelimiterCount.q, i.q
+
+	If CleanString
+		StringToSplit$ = Trim(StringToSplit$, Delimeter$)
+
+		While FindString(StringToSplit$, Delimeter$+Delimeter$)
+			StringToSplit$ = ReplaceString(StringToSplit$, Delimeter$+Delimeter$, Delimeter$)
 		Wend
 	EndIf
 
-	Protected count, i
-	count = CountString(s$,delimeter$) + 1
-	
-	Dim a$(count)
-	For i = 1 To count
-		a$(i - 1) = StringField(s$,i,delimeter$)
+	DelimiterCount = CountString(StringToSplit$,Delimeter$)
+
+	Dim A$(DelimiterCount)
+	For i = 0 To DelimiterCount
+		A$(i) = StringField(StringToSplit$,i+1,Delimeter$)
 	Next
-	ProcedureReturn count
+
+	ProcedureReturn DelimiterCount + 1
 EndProcedure
 
-; Returns: Nonzero if a$ is equal to #Null$ or is filled with spaces.
-Procedure.b IsNullOrEmpty(a$)
-	ProcedureReturn Bool(Trim(a$) = #Null$)
+; Returns nonzero if A$ is equal to #Null$ or is filled with spaces.
+Procedure.b IsNullOrEmpty(A$)
+	ProcedureReturn Bool(Trim(A$) = #Null$)
 EndProcedure
 
-; Procedure.s Format(text.s, *val1 = 0, *val2 = 0, *val3 = 0, *val4 = 0, *val5 = 0, *val6 = 0, *val7 = 0, *val8 = 0, *val9 = 0, *val10 = 0, *val11 = 0 )
-; 	
-; 	;http://www.purebasic.fr/english/viewtopic.php?t=32026
-; 	
-; 	ProcedureReturn #Null$
-; EndProcedure
+
+; Returns the largest common prefix in the given A$ and B$ strings.
+Procedure.s CommonPrefix(A$, B$)
+	Protected MaxPrefixLength.q, PrefixIndex.q
+	
+	If Len(A$) > Len(B$)
+		MaxPrefixLength = Len(A$)
+	Else
+		MaxPrefixLength = Len(B$)
+	EndIf
+	
+	For PrefixIndex = 1 To MaxPrefixLength
+		If Mid(A$, PrefixIndex, 1) <> Mid(B$, PrefixIndex, 1)
+			Break
+		EndIf
+	Next
+	
+	ProcedureReturn Left(A$, PrefixIndex - 1)
+EndProcedure
+
+; Returns the length of the largest common prefix in the given A$ and B$ strings.
+Procedure.q CommonPrefixLength(A$, B$)
+	Protected MaxPrefixLength.q, PrefixIndex.q
+	
+	If Len(A$) > Len(B$)
+		MaxPrefixLength = Len(A$)
+	Else
+		MaxPrefixLength = Len(B$)
+	EndIf
+	
+	For PrefixIndex = 1 To MaxPrefixLength
+		If Mid(A$, PrefixIndex, 1) <> Mid(B$, PrefixIndex, 1)
+			Break
+		EndIf
+	Next
+	
+	ProcedureReturn PrefixIndex - 1
+EndProcedure
 
 ;}
 
-;
-;- Unit Tests & Examples
+
+;- Tests
 ;{
 
 CompilerIf #PB_Compiler_IsMainFile
-	XIncludeFile "./UnitTest-Basic.pb"
+	Define InputString.s, Temp.s, Dim Letters.s(0), i.i
+
+	; -------------------------------------------------------
+	;  SplitArrayToString(A$, StringToSplit$, Delimeter$)
+	;  "a;b;c;d;e;f;g;h;i;j;k;l;m;n;o;p;q;r;s;t;u;v;w;x;y;z"
+	; -------------------------------------------------------
+	Debug "> SplitArrayToString(A$, StringToSplit$, Delimeter$)"
+	InputString = "a;b;c;d;e;f;g;h;i;j;k;l;m;n;o;p;q;r;s;t;u;v;w;x;y;z"
 	
-	Debug "Unit tests -> "+Chr(34)+#PB_Compiler_Filename+Chr(34)
+	Debug #TAB$ + "Using: "+Chr(34)+InputString+Chr(34)
+	Debug #TAB$ + "Length: "+SplitArrayToString(Letters(), InputString, ";")
+
+	Temp = "["
+	For i=0 To ArraySize(Letters())
+		Temp + Letters(i) + " ,"
+	Next
+	Temp = Left(Temp, Len(Temp) - 2) + "]"
+
+	Debug #TAB$ + "Array: "+Temp
+	Debug ""
+
+
+	; -------------------------------------------------
+	;  SplitArrayToString(A$, StringToSplit$, Delimeter$, #True)
+	;  ";a;;b;c;;;;d;"
+	; -------------------------------------------------
+	Debug "> SplitArrayToString(A$, StringToSplit$, Delimeter$, #True)"
+	InputString = ";a;;b;c;;;;d;"
+
+	Debug #TAB$ + "Using: "+Chr(34)+InputString+Chr(34)
+	Debug #TAB$ + "Length: "+SplitArrayToString(Letters(), InputString, ";", #True)
+
+	Temp = "["
+	For i=0 To ArraySize(Letters())
+		Temp + Letters(i) + " ,"
+	Next
+	Temp = Left(Temp, Len(Temp) - 2) + "]"
+
+	Debug #TAB$ + "Array: "+Temp
+	Debug ""
+
+
+	; --------------------------------------------------
+	;  SplitArrayToString(A$, StringToSplit$, Delimeter$, #False)
+	;  ";a;;b;c;;;;d;"
+	; --------------------------------------------------
+	Debug "> SplitArrayToString(A$, StringToSplit$, Delimeter$, #False)"
+	Debug #TAB$ + "Using: "+Chr(34)+InputString+Chr(34)
+	Debug #TAB$ + "Length: "+SplitArrayToString(Letters(), InputString, ";", #False)
+
+	Temp = "["
+	For i=0 To ArraySize(Letters())
+		Temp + Letters(i) + " ,"
+	Next
+	Temp = Left(Temp, Len(Temp) - 2) + "]"
+
+	Debug #TAB$ + "Array: "+Temp
+	Debug ""
+
+
+	; -------------------
+	;  IsNullOrEmpty(A$)
+	; -------------------
+	Debug "> IsNullOrEmpty(A$)"
+
+	If IsNullOrEmpty("") = #True
+		Debug #TAB$+"Empty string -> True"
+	Else
+		Debug #TAB$+"Empty string -> False (ERROR !!!)"
+	EndIf
+
+	If IsNullOrEmpty(#Null$) = #True
+		Debug #TAB$+"#Null$ -> True"
+	Else
+		Debug #TAB$+"#Null$ -> False (ERROR !!!)"
+	EndIf
+
+	If IsNullOrEmpty(Space(3)) = #True
+		Debug #TAB$+"Space(3) -> True"
+	Else
+		Debug #TAB$+"Space(3) -> False (ERROR !!!)"
+	EndIf
+
+	If IsNullOrEmpty("Hello World") = #False
+		Debug #TAB$+Chr(34)+"Hello World"+Chr(34)+" -> False"
+	Else
+		Debug #TAB$+Chr(34)+"Hello World"+Chr(34)+" -> True (ERROR !!!)"
+	EndIf
+
 	Debug ""
 	
-	Debug "> ExplodeStringToArray(a$, s$, delimeter$)"
-	Alphabet.s = "a;b;c;d;e;f;g;h;i;j;k;l;m;n;o;p;q;r;s;t;u;v;w;x;y;z"
-	Dim Letters.s(0)
-	Assert(Bool(ExplodeStringToArray(Letters(), Alphabet, ";") = 26), "Returned value (26)")
-	Assert(Bool(Letters(0) = "a"), "Letter in Letters(0)")
-	Debug ""
 	
-	Debug "> ExplodeStringToArray(a$, s$, delimeter$, #True)"
-	Temp.s = ";a;;b;c;;;;d;"
-	Assert(Bool(ExplodeStringToArray(Letters(), Temp, ";", #True) = 4), "Returned value (4)")
-	Assert(Bool(Letters(0) = "a"), "Letter in Letters(0)")
-	Debug ""
+	; ------------------------
+	;  CommonPrefix(A$, B$)
+	;  CommonPrefixLength(A$, B$)
+	; ------------------------
+	Debug "> CommonPrefix(A$, B$) & CommonPrefixLength(A$, B$)"
 	
-	Debug "> ExplodeStringToArray(a$, s$, delimeter$, #False)"
-	Assert(Bool(ExplodeStringToArray(Letters(), Temp, ";", #False) = 10), "Returned value (10)")
-	Assert(Bool(Letters(0) = ""), "Letter in Letters(0) = nothing")
-	Assert(Bool(Letters(1) = "a"), "Letter in Letters(1) = 'a'")
-	Debug ""
+	Define String1$, String2$
 	
-	Debug "> IsNullOrEmpty(a$)"
-	Assert(Bool(IsNullOrEmpty("")), "Empty string")
-	Assert(Bool(IsNullOrEmpty(#Null$)), "#Null$")
-	Assert(Bool(IsNullOrEmpty(Space(3))), Chr(34)+Space(3)+Chr(34))
-	AssertFalse(Bool(IsNullOrEmpty("Hello World")), Chr(34)+"Hello World"+Chr(34))
-	Debug ""
+	String1$ = "Hello World !"
+	String2$ = "Hello !"
 	
-	Debug "-- "+PassedUnitTests+" passed - "+FailedUnitTests+" failed --"
+	Debug #TAB$ + "Using: " + Chr(34) + String1$ + Chr(34) + " & " + Chr(34) + String2$ + Chr(34)
+	Debug #TAB$ + "Common Prefix: "+ Chr(34) + CommonPrefix(String1$, String2$) + Chr(34)
+	Debug #TAB$ + "Prefix Length: "+ CommonPrefixLength(String1$, String2$)+#CRLF$
+	
+	String1$ = "Hi !"
+	String2$ = "Hi !"
+	
+	Debug #TAB$ + "Using: " + Chr(34) + String1$ + Chr(34) + " & " + Chr(34) + String2$ + Chr(34)
+	Debug #TAB$ + "Common Prefix: "+ Chr(34) + CommonPrefix(String1$, String2$) + Chr(34)
+	Debug #TAB$ + "Prefix Length: "+ CommonPrefixLength(String1$, String2$)+#CRLF$
+	
+	String1$ = "Melk"
+	String2$ = "Lait"
+	
+	Debug #TAB$ + "Using: " + Chr(34) + String1$ + Chr(34) + " & " + Chr(34) + String2$ + Chr(34)
+	Debug #TAB$ + "Common Prefix: "+ Chr(34) + CommonPrefix(String1$, String2$) + Chr(34)
+	Debug #TAB$ + "Prefix Length: "+ CommonPrefixLength(String1$, String2$)+#CRLF$
+	
 CompilerEndIf
 
 ;}
-
-; IDE Options = PureBasic 5.62 (Windows - x64)
-; CursorPosition = 18
-; Folding = --
-; EnableXP
-; CompileSourceDirectory
-; EnableCompileCount = 0
-; EnableBuildCount = 0

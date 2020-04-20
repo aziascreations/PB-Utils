@@ -1,212 +1,122 @@
-# Purebasic Utils
-This repository contains a small collection of utilities designed to help you with specific tasks in PureBasic.
+# PureBasic Utils
 
-# This readme is out of date, please read the source code for the doc in the comments.
+A collection of small includes that attempt to fix and give out access to features that are not present in PureBasic by default.
 
-# Purebasic Utils
-A small collection of utilities designed to help you in [programming in PB ?].<br>
+The documentation for each include is included in the source code itself, as well as on a dedicated page that is accessible with a link given in this readme and in the source code itself.
 
-**Disclaimer:**<br>
-Some procedures are based on other people's code.<br>
-For each of them, credit is given in the source code files and in the [Credits](#credits) section.<br>
-And a url linking to the original thread or post is also given.
+If you want to consult the changelog, you can do so [here](changelog.md).
 
 
-Every source code should work with EnableExplicit.
+## Summary
 
-**Available utilities:**<br>
-&nbsp;&nbsp;● [Logger](#logger)<br>
-&nbsp;&nbsp;● [Semantic Versioning](#semantic-versioning)<br>
-&nbsp;&nbsp;● [Strings](#strings)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚬ [ExplodeStringToArray()](#user-content-strings.explodestringtoarray)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚬ [IsNullOrEmpty()](#user-content-strings.isnullorempty)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚬ [Format()](#user-content-strings.format)<br>
-&nbsp;&nbsp;● [Unit Testing](#unit-testing-basic)<br>
-&nbsp;&nbsp;● [UUID4](#uuid4-logger-version--lite-version)
-
-## Utilities
-### [Logger](Logger.pb)
-
-<a name="logger.tmp"></a>
-<details>
-<summary><code>Click to expand</code></summary>
-<b>!!! A large portion of the formatter will be reworked when the Strings.Format() procedure is finished. !!!</b>
-
-This utility lets you easily log things to the console, debug window, or to a log file.
-
-#### ◆ **Log file configuration**
-`ConfigureLoggerOutputPath(LogFilePath.s="", KeepPreviousIfError.b=#True)`<br>
-[*]An empty string will disable the log file and ...
-
-#### ◆ **Logging levels configuration**
-`ConfigureLogLevels(LogFileLoggingLevel.b=..., DebugWindowLoggingLevel.b=..., ConsoleLoggingLevel.b=...)`<br>
-
-These 3 procedures allow you to configure each level independently:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`ConfigureFileLogLevel(LogFileLoggingLevel.b)`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`ConfigureDebugWindowLogLevel(DebugWindowLoggingLevel.b)`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`ConfigureConsoleLogLevel(ConsoleLoggingLevel.b)`<br>
-
-Available logging levels:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`#LoggingLevel_Trace` - "Super-debug" level<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`#LoggingLevel_Debug` - <br>
-&nbsp;&nbsp;&nbsp;&nbsp;`#LoggingLevel_Fatal` - <br>
-&nbsp;&nbsp;&nbsp;&nbsp;`#LoggingLevel_Error` - <br>
-&nbsp;&nbsp;&nbsp;&nbsp;`#LoggingLevel_Warn` - <br>
-&nbsp;&nbsp;&nbsp;&nbsp;`#LoggingLevel_Info` - <br>
-&nbsp;&nbsp;&nbsp;&nbsp;`#LoggingLevel_Off` - <br>
-&nbsp;&nbsp;&nbsp;&nbsp;`#LoggingLevel_Any` - Everything except the Trave level.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`#LoggingLevel_Keep` - Only used internally or with `ConfigureLogFormats(...)`.
-
-#### ◆ **Logging formats configuration**
-
-`ConfigureLogFormats(TimeFormat.s="", DebugWindowLoggingFormat.s="", LogFileLoggingFormat.s="", ConsoleLoggingFormat.s="")`<br>
-This procedure will 
-
-These 4 procedure allow you to configure each format independently:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`ConfigureTimeLogFormat(TimeFormat.s)`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`ConfigureDebugWindowLogFormat(DebugWindowLoggingFormat.s)`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`ConfigureFileLogFormat(LogFileLoggingFormat.s)`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;`ConfigureConsoleLogFormat(ConsoleLoggingFormat.s)`
-
-The following [?] can be used in the format String:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;● `%time%` will be replaced by the formatted time (`TimeFormat.s`).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;● `%msg%` will be replaced by the message (`Message.s`).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;● `%mbtitle%` will be replaced by the MessageBox title (`MBTitle.s`).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;● `%mbmsg%` will be replaced by the MessageBox message (`MBMessage.s`).<br>
-
-Default formats:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;● File: `"%time% - %msg%"`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;● Time: `"%yy-%mm-%dd %hh:%ii:%ss"`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;● Debug: `"%msg%"`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;● Console: `"%msg%"`
-
-#### ◆ **Usage**
-<br>
-</details><br>
+&emsp;● [Includes](#includes)<br>
+&emsp;&emsp;⚬ [BasicTernary](#basicternary)<br>
+&emsp;&emsp;⚬ [Colors](#colors)<br>
+&emsp;&emsp;⚬ [Endianness](#endianness)<br>
+&emsp;&emsp;⚬ [Files](#files)<br>
+&emsp;&emsp;⚬ [Strings](#strings)<br>
+&emsp;&emsp;⚬ [UUID4](#uuid4)<br>
+&emsp;● [Remarks](#remarks)<br>
+&emsp;● [Credits](#credits)<br>
+&emsp;● [License](#license)<br>
 
 
-### [Semantic Versioning](SemanticVersioning.pb)
+## Includes
 
-<code>InitializeSemVer(CanShowMessages.b=#False, CanEndProgram.b=#True)</code><br>
+In this section you will find a list of all the includes, as well as a short description of it, and links to the documentation and the source code.
 
-<code>IsVersionValid(Version.s, DoValidityCheck=#True)</code><br>
 
-<code>GetVersionNumber(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)</code><br>
+### BasicTernary
 
-<code>GetVersionMajor(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)</code><br>
+Contains a set of procedures that act as a sort of ternary operator for each of the basic data types provided by PureBasic.
 
-<code>GetVersionMinor(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)</code><br>
-
-<code>GetVersionPatch(Version.s, CanShowMessages.b=#False, CanEndProgram.b=#True, DoValidityCheck=#True)</code><br>
-
-<code>IsVersionCompatible(VersionA.s, VersionB.s)</code>
-
+[📜 <sub>Documentation</sub>](Documentation/BasicTernary.md)&emsp;&emsp;
+[💾 <sub>Source Code</sub>](Includes/BasicTernary.pbi)<br>
 <br>
 
 
-### [Strings](Strings.pb)
+### Colors
 
-<a name="strings.explodestringtoarray"></a>
-<details>
-<summary><code>ExplodeStringToArray(Array a$(1), s$, d$)</code></summary>
-<p>&nbsp;&nbsp;<b>How it works:</b><br>
-&nbsp;&nbsp;&nbsp;&nbsp;Explodes a given String(s$) at every given delimiter(d$) and stores the String parts in a given pre-initialized Array(a$).</p>
+Contains a collection of RGB color constants that are from CSS3, or Windows Metro UI.<!--<br>
+It also contains a couple of constants for different shades of gray.-->
 
-<p>&nbsp;&nbsp;<b>Returns :</b><br>
-&nbsp;&nbsp;&nbsp;&nbsp;The number of occurences/sections in the given String.</p>
-&nbsp;&nbsp;&nbsp;&nbsp;Or the amount of entries in the array.</p>
-</details><br>
-
-<a name="strings.isnullorempty"></a>
-<details>
-	<summary><code>IsNullOrEmpty(a$)</code></summary>
-<p>&nbsp;&nbsp;<b>Parameters:</b><br>
-&nbsp;&nbsp;&nbsp;&nbsp;a$ - A String that will be analysed.</p>
-
-<p>&nbsp;&nbsp;<b>Returns :</b><br>
-&nbsp;&nbsp;&nbsp;&nbsp;A nonzero value if <i>a$</i> is equal to <i>#Null$</i>, of length 0 or if it is filled with spaces characters (0x20).</p>
-</details><br>
-
-<a name="strings.format"></a>
-<details>
-<summary><code>Format(text.s, *val1=0, ..., *val11=0)</code></summary>
-<b>TEMP: This function isn't finished!</b>
-
-<p>&nbsp;&nbsp;<b>How it works:</b><br>
-&nbsp;&nbsp;&nbsp;&nbsp;???</p>
-
-<p>&nbsp;&nbsp;<b>Parameters:</b><br>
-&nbsp;&nbsp;&nbsp;&nbsp;text.s - ???<br>
-&nbsp;&nbsp;&nbsp;&nbsp;*val1 - ???<br>
-&nbsp;&nbsp;&nbsp;&nbsp;*val11 - ???<br></p>
-
-<p>&nbsp;&nbsp;<b>Formatting:</b><br>
-&nbsp;&nbsp;&nbsp;&nbsp;???</p>
-
-<p>&nbsp;&nbsp;<b>Returns:</b><br>
-&nbsp;&nbsp;&nbsp;&nbsp;The formatted String</p>
-</details><br>
-
+[📜 <sub>Documentation</sub>](Documentation/Colors.md)&emsp;&emsp;
+[💾 <sub>Source Code</sub>](Includes/Colors.pbi)<br>
 <br>
 
 
-### [Unit Testing](UnitTest-Basic.pb) (Basic)
-This basic unit testing [module ???] utility gives you access to the following procedures and values:
+### Endianness
 
-<b>Procedures:</b><br>
-`Assert(Bool.b, TestName.s="")`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;If `Bool.b` is true, the value of `PassedTests.i` will be incremented, otherwise, `FailedTests.i` will be.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;A condition can be passed as `Bool.b` if it is "wrapped" in a `Bool()` procedure.
+Contains a set of procedures and a macro that will swap the endianness or nibbles of a given value which has one of the basic types provided by PureBasic.
 
-`AssertTrue(Bool.b=#True, TestName.s="")`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Same as `Assert()`, with a default value for `Bool.b`.
+The primary use for this include is to be able to interact with binary data without having to worry about implementing a new way of swapping endianness each time.
 
-`AssertFalse(Bool.b=#False, TestName.s="")`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;The opposite of `AssertTrue()`.
-
-`Pass(TestName.s="")`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Will simply increment `PassedTests.i` and print "Passed" in the debug window
-
-`Fail(TestName.s="")`<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Will simply increment `FailedTests.i` and print "Failed" in the debug window
-
-<b>Global Variables:</b><br>
-`PassedUnitTests.i`: The number of passed tests<br>
-`FailedUnitTests.i`: The number of failed tests
-
-<b>Remarks:</b><br>
-The `TestName.s` parameter is optional and will simply influence the text displayed in the debug window.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;"Passed" if `TestName.s` is empty or "Passed -> TestName.s" otherwise.<br>
+[📜 <sub>Documentation</sub>](Documentation/Endianness.md)&emsp;&emsp;
+[💾 <sub>Source Code</sub>](Includes/Endianness.pbi)&emsp;&emsp;<!--[📥 <sub>Releases</sub>](Includes/Endianness.pbi)--><br>
 <br>
 
-### [UUID4](UUID4.pb) ([Logger version](UUID4-Logger.pb))
-In both version, you can generate a UUID4 by using the following procedure:
 
-``GenerateUUID4()``<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Returns a UUID4 String that matches the standard.<br>
+### Files
 
-``IsUUID4Compliant(uuid4$)``<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Returns a non-zero value if the string matches the regex.<br>
+**Comming soon**
 
-You also have access to a regex (`#REGEX_ID_UUID4`) that lets you check if a String matches the UUID4 standard.<br>
+Contains a small set of procedures to help with files and paths.
 
-# Enumerations Used
-* Regex (Used for regex IDs)
-* ErrorCode (Used with `End [Integer]`)
+[📜 <sub>Documentation</sub>](Documentation/Files.md)&emsp;&emsp;
+[💾 <sub>Source Code</sub>](Includes/Files.pbi)<br>
+<br>
 
-# Usefull Links
-* [cli-args-pb](https://github.com/aziascreations/cli-args-pb): Launch parameters parser
 
-# Credits
-The original authors and posts are also mentionned and linked in the source files.
+### Strings
+
+Contains a set of procedures to manipulate string more easily if you need to.
+
+The included procedures allow you to split a string and check if it is null or empty.
+
+[📜 <sub>Documentation</sub>](Documentation/Strings.md)&emsp;&emsp;
+[💾 <sub>Source Code</sub>](Includes/Strings.pbi)<br>
+<br>
+
+
+### UUID4
+
+Contains a set of procedures to generate UUID4 strings and to validate them.
+
+A procedure to generate it directly into a buffer is also planned.
+
+[📜 <sub>Documentation</sub>](Documentation/UUID4.md)&emsp;&emsp;
+[💾 <sub>Source Code</sub>](Includes/UUID4.pbi)<br>
+<br>
+
+
+## Remarks
+
+Some of the includes may declare constants and use some enumeration identifiers.<br>
+More information about these can be found on the respective documentation page of each include.
+
+
+## Credits
 
 ● Demivec<br>
-&nbsp;&nbsp;&nbsp;&nbsp; ⚬ Strings - `ExplodeStringToArray(...)`
-&nbsp;&nbsp;([Thread](http://www.purebasic.fr/english/viewtopic.php?f=13&t=41704))<br>
+&emsp;&emsp; ⚬ Strings - Original `ExplodeStringToArray(...)` procedure idea
+&emsp;([Thread](http://www.purebasic.fr/english/viewtopic.php?f=13&t=41704))<br>
 
-● Mistrel<br>
-&nbsp;&nbsp;&nbsp;&nbsp; ⚬ UUID4 - Original GUID generator
-&nbsp;&nbsp;([Thread](http://www.purebasic.fr/english/viewtopic.php?t=38008))
+● djes<br>
+&emsp;&emsp; ⚬ Endianness - Original `EndianSwapL(Number.l)` procedure idea
+&emsp;([Thread](https://www.purebasic.fr/english/viewtopic.php?f=19&t=17427))
 
-# License
+
+## License
+
+This license applies to all the code in this repo.
+
 [WTFPL](LICENSE)
+
+<!--
+Write the uuid 4 directly in a string buffer (A$ = Space(n) with RandomData(...))
+Trash
+Note, use grip to view this readme locally.
+ (📃📃 | 🧱🧱  💾 📜 🧾 📝)mod
+[📜 Doc]()&#9;&#9;[💾 Include]()<br>
+[📜 Doc]()&ensp;&ensp;[💾 Include]()<br>
+[📜 <sub>Documentation</sub>]()&emsp;&emsp;[💾 <sub>Include</sub>]()-->
