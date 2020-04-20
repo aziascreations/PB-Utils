@@ -1,24 +1,24 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: UUID4.pbi
-;      Version: 1.1.0
-;       Author: Herwin Bozet & Demivec
+;      Version: 2.0.0
+;       Author: Herwin Bozet
 ;  Create date: 22 October 2017, 15:46:05
-; 
+;
 ;  Description: ???
-; 
+;
 ; ==- Compatibility -=============================
 ;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
 ;  Operating system: Windows (Other platforms untested)
-; 
+;
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://github.com/aziascreations/PB-Utils/wiki/UUID4
 ;  License: WTFPL
-; 
+;
 ;}
 
-; TODO: Add a generate UUID4 Buffer 
+; TODO: Add a generate UUID4 Buffer
 ; TODO: Add a parameter to use SecureRandom(...)
 
 ;
@@ -62,20 +62,20 @@ Procedure.s GenerateUUID4()
 	Define.b i
 	Define.s UUID
 	Dim _UUID4Bytes.b(16)
-	
+
 	For i=0 To 16-1
 		_UUID4Bytes(i)=Random(255)
 	Next
 	_UUID4Bytes(6)=64+Random(15)
 	_UUID4Bytes(8)=128+Random(63)
-	
+
 	For i=0 To 16-1
 		If i=4 Or i=6 Or i=8 Or i=10
 			UUID.s+"-"
 		EndIf
 		UUID.s+RSet(Hex(_UUID4Bytes(i)&$FF),2,"0")
 	Next
-	
+
 	FreeArray(_UUID4Bytes())
 	ProcedureReturn UUID.s
 EndProcedure
@@ -93,28 +93,28 @@ EndProcedure
 
 CompilerIf #PB_Compiler_IsMainFile
 	Define i.i
-	
+
 	XIncludeFile "UnitTest-Basic.pb"
-	
+
 	Debug "Unit tests -> "+Chr(34)+#PB_Compiler_Filename+Chr(34)
 	Debug ""
-	
+
 	Debug "> GenerateUUID4()"
 	For i=0 To 5
 		Debug GenerateUUID4()
 	Next
 	Pass("UUID Generation")
 	Debug ""
-	
+
 	If FailedUnitTests
 		Debug "ERROR: The ability to generate UUID4 string is required for the other unit tests"
 		End 1
 	EndIf
-	
+
 	Debug "> IsUUID4Compliant(uuid4$)"
 	Assert(IsUUID4Compliant(GenerateUUID4()), "UUID4 validity check")
 	Debug ""
-	
+
 	Debug "-- "+PassedUnitTests+" passed - "+FailedUnitTests+" failed --"
 CompilerEndIf
 

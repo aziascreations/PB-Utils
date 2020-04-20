@@ -28,9 +28,7 @@ In this section you will find a list of all the includes, as well as a short des
 
 ### BasicTernary
 
-Contains a set of procedures that act as a sort of ternary operator.
-
-[use case]
+Contains a set of procedures that act as a sort of ternary operator for each of the basic data types provided by PureBasic.
 
 [📜 <sub>Documentation</sub>](Documentation/BasicTernary.md)&emsp;&emsp;
 [💾 <sub>Source Code</sub>](Includes/BasicTernary.pbi)<br>
@@ -39,8 +37,8 @@ Contains a set of procedures that act as a sort of ternary operator.
 
 ### Colors
 
-Contains a collection of RGB color constants that are from CSS3, or Windows Metro UI.<br>
-It also contains a couple of constants for different shades of gray.
+Contains a collection of RGB color constants that are from CSS3, or Windows Metro UI.<!--<br>
+It also contains a couple of constants for different shades of gray.-->
 
 [📜 <sub>Documentation</sub>](Documentation/Colors.md)&emsp;&emsp;
 [💾 <sub>Source Code</sub>](Includes/Colors.pbi)<br>
@@ -51,7 +49,7 @@ It also contains a couple of constants for different shades of gray.
 
 Contains a set of procedures and a macro that will swap the endianness or nibbles of a given value which has one of the basic types provided by PureBasic.
 
-The primary use for this include is to be able to interact with binary data without having to worry about [process of swapping] endianness.
+The primary use for this include is to be able to interact with binary data without having to worry about implementing a new way of swapping endianness each time.
 
 [📜 <sub>Documentation</sub>](Documentation/Endianness.md)&emsp;&emsp;
 [💾 <sub>Source Code</sub>](Includes/Endianness.pbi)&emsp;&emsp;<!--[📥 <sub>Releases</sub>](Includes/Endianness.pbi)--><br>
@@ -99,26 +97,18 @@ More information about these can be found on the respective documentation page o
 
 ## Credits
 
-The original authors and posts are also mentioned and linked in the source files.
-
-<!--[Have been rewritten and "improved" to avoid dealing with license issues]-->
-
 ● Demivec<br>
-&emsp;&emsp; ⚬ Strings - Original `ExplodeStringToArray(...)` procedure
+&emsp;&emsp; ⚬ Strings - Original `ExplodeStringToArray(...)` procedure idea
 &emsp;([Thread](http://www.purebasic.fr/english/viewtopic.php?f=13&t=41704))<br>
 
-● Mistrel<br>
-&emsp;&emsp; ⚬ UUID4 - Original GUID generator
-&emsp;([Thread](http://www.purebasic.fr/english/viewtopic.php?t=38008))
-
 ● djes<br>
-&emsp;&emsp; ⚬ Endianness - Original `EndianSwapL(Number.l)` procedure
+&emsp;&emsp; ⚬ Endianness - Original `EndianSwapL(Number.l)` procedure idea
 &emsp;([Thread](https://www.purebasic.fr/english/viewtopic.php?f=19&t=17427))
 
 
 ## License
 
-This license applies to all the code in this repo, except for Demivec's `ExplodeStringToArray(...)` and Mistrel's UUID4 procedure which are gonna be rewritten in the next commit to avoid any license issue.
+This license applies to all the code in this repo.
 
 [WTFPL](LICENSE)
 

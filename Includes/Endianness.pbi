@@ -2,21 +2,22 @@
 ; ==- Basic Info -================================
 ;         Name: Endianness.pbi
 ;      Version: 1.0.2
-;      Authors: Herwin Bozet
+;       Author: Herwin Bozet
 ;  Create date: 9 June 2019, 21:04:51
 ; 
 ;  Description: A set of procedure that allow you to swap the endianness of a variable easily.
 ; 
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.60-5.62 (x86 & x64) (Other versions untested)
-;  Operating system: Windows 10 (Other platforms untested)
+;  Compiler version: PureBasic 5.62-5.70 (x86/x64)
+;  Operating system: Windows (Other platforms untested)
 ; 
 ; ==- Credits -===================================
-;  djes: Original EndianSwapL(Number.l) procedure
+;  djes: Original EndianSwapL(Number.l) procedure.
 ;        https://www.purebasic.fr/english/viewtopic.php?f=19&t=17427
 ; 
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
+;     Doc.: https://github.com/aziascreations/PB-Utils/Documentation/Endianness
 ;  License: WTFPL
 ; 
 ; ==- Documentation -=============================
@@ -25,6 +26,9 @@
 ;
 ;}
 
+
+;- Notes
+;{
 
 ; FIXME: IMPORTANT NOTICES !!!
 ; A second procedure was specially made for and .u (and .a) variables to avoid any potential problem that could happen
@@ -46,8 +50,9 @@
 ; BSWAP r32/r64 -> Does the operation on the register itself.
 ; See: https://www.felixcloutier.com/x86/bswap
 
+;}
 
-;
+
 ;- Compiler Directives
 ;{
 
@@ -57,7 +62,6 @@
 ;}
 
 
-;
 ;- Macros
 ;{
 
@@ -81,7 +85,6 @@ EndMacro
 ;}
 
 
-;
 ;- Procedures
 ;{
 
@@ -229,7 +232,6 @@ CompilerEndIf
 ;}
 
 
-;
 ;- Tests
 ;{
 
@@ -314,8 +316,7 @@ CompilerEndIf
 ;}
 
 ; IDE Options = PureBasic 5.70 LTS (Windows - x64)
-; CursorPosition = 59
-; FirstLine = 29
+; CursorPosition = 4
 ; Folding = ----
 ; EnableXP
 ; Compiler = PureBasic 5.62 (Windows - x86)

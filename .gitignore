@@ -4,3 +4,4 @@ changes.txt
 wiki/
 tests/
 trash/
+*.cfg

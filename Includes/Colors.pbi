@@ -250,7 +250,7 @@ EndMacro
 ;}
 
 
-;- Colors - Shades of black
+;- Colors - Shades of black (unused)
 ;{
 
 ; #COLOR_Grey_5  = RGBHex($0D0D0D) ; Rounded up from #C.C (12.75)
@@ -286,8 +286,9 @@ EndMacro
 ;}
 
 ; IDE Options = PureBasic 5.70 LTS (Windows - x64)
-; CursorPosition = 37
-; Folding = 00
+; CursorPosition = 41
+; FirstLine = 36
+; Folding = --
 ; EnableXP
 ; CompileSourceDirectory
 ; EnableCompileCount = 29
