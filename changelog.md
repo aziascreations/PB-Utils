@@ -53,7 +53,7 @@
 ## UnitTest
 ### &emsp;1.4.0 - <sub><sup>///</sup></sub>
 &emsp;&emsp;●&nbsp;&nbsp;Changed the filename to "UnitTest.pbi" from "UnitTest-Basic.pbi"<br>
-&emsp;&emsp;●&nbsp;&nbsp;Added equality procedures for generic comparisons and bitwise ones.<br>
+&emsp;&emsp;●&nbsp;&nbsp;Added equality procedures for generic comparisons, bitwise ones and strings.<br>
 ### &emsp;Previous1.3.1 - <sub><sup>TODO</sup></sub>
 &emsp;&emsp;●&nbsp;&nbsp;TODO<br>
 <br>

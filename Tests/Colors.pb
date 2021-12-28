@@ -28,12 +28,12 @@ XIncludeFile "../Includes/Colors.pbi"
 
 ;- > RGBHex()
 Debug "-=# Testing '+RGBHex()' #=-"
-AssertTrue(Bool($AB1278 = RGBHex($7812AB)), "$AB1278 to $7812AB")
+AssertEqual($AB1278, RGBHex($7812AB), "$AB1278 to $7812AB")
 Debug ""
 
 ;- > RGBAHex()
 Debug "-=# Testing '+RGBAHex()' #=-"
-AssertTrue(Bool($AB1278FE = RGBAHex($FE7812AB)), "$AB1278FE to $FE7812AB")
+AssertEqual($AB1278FE, RGBAHex($FE7812AB), "$AB1278FE to $FE7812AB")
 Debug ""
 
 ;- > Results

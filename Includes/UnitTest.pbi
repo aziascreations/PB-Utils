@@ -86,6 +86,14 @@ Procedure AssertNotEqual(Value1, Value2, TestName.s="")
 	AssertTrue(Bool(Value1 <> Value2), TestName)
 EndProcedure
 
+Procedure AssertEqualStr(String1$, String2$, TestName.s="")
+	AssertTrue(Bool(String1$ = String2$), TestName)
+EndProcedure
+
+Procedure AssertNotEqualStr(String1$, String2$, TestName.s="")
+	AssertTrue(Bool(String1$ <> String2$), TestName)
+EndProcedure
+
 Procedure AssertBitwiseEqual(Value1, Value2, TestName.s="")
 	AssertTrue(Bool(Value1 ! Value2 = 0), TestName)
 EndProcedure

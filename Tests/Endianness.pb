@@ -31,73 +31,92 @@ Debug "-=# Remarks #=-"
 Debug " * Implicit types will only be tested when signed types are used !"
 Debug ""
 
+
 ;- > NibbleSwapA()
 Debug "-=# Testing 'NibbleSwapA()' #=-"
-AssertTrue(Bool($BA = NibbleSwapA($AB)), "$AB to $BA")
+Define AsciiInput.a = $AB, AsciiOutput.a = $BA
+AssertEqual($BA, NibbleSwapA($AB), "Equality on direct values")
+AssertEqual(AsciiOutput, NibbleSwapA(AsciiInput), "Equality on typed variables")
 Debug ""
+
 
 ;- > NibbleSwapB()
-Debug "-=# Testing 'NibbleSwapB()' #=-"
 Define ByteInput.b, ByteOutput.b
 
+Debug "-=# Testing 'NibbleSwapB()' with sign bit #=-"
 ByteInput = $AB
 ByteOutput = $BA
-AssertTrue(Bool($BA <> NibbleSwapB($AB)), "$AB to $BA - Different due to implicit types and sign bit")
-AssertTrue(Bool(ByteOutput = NibbleSwapB(ByteInput)), "$AB to $BA - Equal with explicit types")
+AssertEqual($BA, NibbleSwapB($AB), "Numeric equality on direct values")
+AssertBitwiseEqual($BA, NibbleSwapB($AB), "Bitwise equality on direct values")
+AssertEqual(ByteOutput, NibbleSwapB(ByteInput), "Numeric equality on typed variables")
+AssertBitwiseEqual(ByteOutput, NibbleSwapB(ByteInput), "Bitwise equality on typed variables")
+Debug ""
 
+Debug "-=# Testing 'NibbleSwapB()' without sign bit #=-"
 ByteInput = $12
 ByteOutput = $21
-AssertTrue(Bool($21 = NibbleSwapB($12)), "$12 to $21 - Equal with implicit types (Due to sign bit staying at '0')")
-AssertTrue(Bool(ByteOutput = NibbleSwapB(ByteInput)), "$12 to $21 - Equal with explicit types")
+AssertEqual($21, NibbleSwapB($12), "Numeric equality on direct values")
+AssertBitwiseEqual($21, NibbleSwapB($12), "Bitwise equality on direct values")
+AssertEqual(ByteOutput, NibbleSwapB(ByteInput), "Numeric equality on typed variables")
+AssertBitwiseEqual(ByteOutput, NibbleSwapB(ByteInput), "Bitwise equality on typed variables")
 Debug ""
+
 
 ;- > EndianSwapU()
 Debug "-=# Testing 'EndianSwapU()' #=-"
-AssertTrue(Bool($CDAB = EndianSwapU($ABCD)), "$ABCD to $CDAB")
+Define UnicodeInput.u = $ABCD, UnicodeOutput.u = $CDAB
+AssertTrue(Bool($CDAB = EndianSwapU($ABCD)), "Numeric equality on direct values")
+AssertBitwiseEqual($CDAB, EndianSwapU($ABCD), "Bitwise equality on direct values")
+AssertEqual(UnicodeOutput, EndianSwapU(UnicodeInput), "Numeric equality on typed variables")
+AssertBitwiseEqual(UnicodeOutput, EndianSwapU(UnicodeInput), "Bitwise equality on typed variables")
 Debug ""
+
 
 ;- > EndianSwapW()
-Debug "-=# Testing 'EndianSwapW()' #=-"
 Define WordInput.w, WordOutput.w
 
+Debug "-=# Testing 'EndianSwapW()' with sign bit #=-"
 WordInput = $ABCD
 WordOutput = $CDAB
-AssertTrue(Bool($CDAB <> EndianSwapW($ABCD)), "$ABCD to $CDAB - Different due to implicit types and sign bit")
-AssertTrue(Bool(WordOutput = EndianSwapW(WordInput)), "$ABCD to $CDAB - Equal with explicit types")
-
-WordInput = $1234
-WordOutput = $3412
-AssertTrue(Bool($3412 = EndianSwapW($1234)), "$1234 to $3412 - Equal with implicit types (Due to sign bit staying at '0')")
-AssertTrue(Bool(WordOutput = EndianSwapW(WordInput)), "$1234 to $3412 - Equal with explicit types")
+AssertEqual($CDAB, EndianSwapW($ABCD), "Numeric equality on direct values")
+AssertBitwiseEqual($CDAB, EndianSwapW($ABCD), "Bitwise equality on direct values")
+AssertEqual(WordOutput, EndianSwapW(WordInput), "Numeric equality on typed variables")
+AssertBitwiseEqual(WordOutput, EndianSwapW(WordInput), "Bitwise equality on typed variables")
 Debug ""
 
+Debug "-=# Testing 'EndianSwapW()' without sign bit #=-"
+WordInput = $1234
+WordOutput = $3412
+AssertEqual($3412, EndianSwapW($1234), "Numeric equality on direct values")
+AssertBitwiseEqual($3412, EndianSwapW($1234), "Bitwise equality on direct values")
+AssertEqual(WordOutput, EndianSwapW(WordInput), "Numeric equality on typed variables")
+AssertBitwiseEqual(WordOutput, EndianSwapW(WordInput), "Bitwise equality on typed variables")
+Debug ""
 
 
 ;- > EndianSwapL()
-Debug "-=# Testing 'EndianSwapL()' #=-"
-Define LongInput.l, LongOutput.l, LongBuffer.l
+Define LongInput.l, LongOutput.l
 
+Debug "-=# Testing 'EndianSwapL()' with sign bit #=-"
 LongInput = $89ABCDEF
 LongOutput = $EFCDAB89
-AssertTrue(Bool($EFCDAB89 <> EndianSwapL($89ABCDEF)), "$89ABCDEF to $EFCDAB89 - Different (Direct values)")
-AssertTrue(Bool(LongOutput = EndianSwapL(LongInput)), "$89ABCDEF to $EFCDAB89 - Equal (Typed variables)")
+AssertEqual($EFCDAB89, EndianSwapL($89ABCDEF), "Numeric equality on direct values")
+AssertBitwiseEqual($EFCDAB89, EndianSwapL($89ABCDEF), "Bitwise equality on direct values")
+; The 2 next tests appears to fail with the x64 compiler when comparing them, however, the hex value seems to be equal...
+; This may be due to an undocummented typecasting from long to int by PureBasic itself.
+AssertEqual(LongOutput, EndianSwapL(LongInput), "Numeric equality on typed variables")
+AssertBitwiseEqual(LongOutput, EndianSwapL(LongInput), "Bitwise equality on typed variables")
+AssertEqual(LongOutput & $FFFFFFFF, EndianSwapL(LongInput) & $FFFFFFFF, "Numeric equality on typed variables with 'AND' bitwise operation")
+AssertBitwiseEqual(LongOutput & $FFFFFFFF, EndianSwapL(LongInput) & $FFFFFFFF, "Bitwise equality on typed variables with 'AND' bitwise operation")
+Debug ""
 
-LongBuffer = EndianSwapL(LongInput)
-AssertTrue(Bool(LongOutput = EndianSwapL(LongInput)), "$89ABCDEF to $EFCDAB89 - Equal (Typed variables & Buffer output variable)")
-
-; These appears to fail with the x64 compiler when comparing them, however, the hex value seems to be equal...
-
-;Debug Hex($89ABCDEF) + " -> " + Str($89ABCDEF)
-;Debug Hex($EFCDAB89) + " -> " + Str($EFCDAB89)
-;Debug Hex(LongInput) + " -> " + Str(LongInput)
-;Debug Hex(LongOutput) + " -> " + Str(LongOutput)
-;Debug Hex(LongBuffer) + " -> " + Str(LongBuffer)
-;Debug Hex(EndianSwapL(LongInput)) + " -> " + Str(EndianSwapL(LongInput))
-
+Debug "-=# Testing 'EndianSwapL()' without sign bit #=-"
 LongInput = $1A2B3C4D
 LongOutput = $4D3C2B1A
-AssertTrue(Bool($4D3C2B1A = EndianSwapL($1A2B3C4D)), "$1A2B3C4D to $4D3C2B1A - Equal with implicit types (Due to sign bit staying at '0')")
-AssertTrue(Bool(LongOutput = EndianSwapL(LongInput)), "$1A2B3C4D to $4D3C2B1A - Equal with explicit types")
+AssertEqual($4D3C2B1A, EndianSwapL($1A2B3C4D), "Numeric equality on direct values")
+AssertBitwiseEqual($4D3C2B1A, EndianSwapL($1A2B3C4D), "Bitwise equality on direct values")
+AssertEqual(LongOutput, EndianSwapL(LongInput), "Numeric equality on typed variables")
+AssertBitwiseEqual(LongOutput, EndianSwapL(LongInput), "Bitwise equality on typed variables")
 Debug ""
 
 ; 	Debug "Integer:"
