@@ -5,10 +5,6 @@
 *.exe
 PureBasic_Compilation*
 
-# Personnal Files (Cleanup needed !)
-Includes/WizardMagicStuff.pb
-InstallAsUserLibs.bat
-changes.txt
-wiki/
+# Personnal Files
 trash/
-*.cfg
+*.md.cfg

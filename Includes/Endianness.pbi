@@ -1,7 +1,7 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: Endianness.pbi
-;      Version: 1.0.2
+;      Version: 1.1.0
 ;       Author: Herwin Bozet
 ;  Create date: 9 June 2019, 21:04:51
 ; 
@@ -56,8 +56,9 @@
 ;- Compiler Directives
 ;{
 
-; The following line is only used to see if it works with it enabled, and for debugging.
-;EnableExplicit
+CompilerIf #PB_Compiler_Processor <> #PB_Processor_x86 And #PB_Compiler_Processor <> #PB_Processor_x64
+	CompilerError "The 'Endianness.pbi' includes can only be compiled for x86 or x64 CPU architectures !"
+CompilerEndIf
 
 ;}
 
@@ -95,7 +96,7 @@ Procedure.b NibbleSwapB(Number.b)
 		ROL Number, 4
 	DisableASM
 	
-	ProcedureReturn Number
+	ProcedureReturn Number & $FF
 EndProcedure
 
 Procedure.a NibbleSwapA(Number.a)
@@ -230,93 +231,3 @@ CompilerElse
 CompilerEndIf
 
 ;}
-
-
-;- Tests
-;{
-
-CompilerIf #PB_Compiler_IsMainFile
-	Define VarB.b = $B5
-	Debug "Byte:"
-	Debug "0x"+RSet(Hex(VarB, #PB_Byte), 2, "0")+" -> 0x"+RSet(Hex(NibbleSwapB(VarB), #PB_Byte), 2, "0")
-	Debug Str(VarB)+" -> "+Str(NibbleSwapB(VarB))
-	Debug ""
-	
-	Define VarA.b = $B5
-	Debug "Ascii:"
-	Debug "0x"+RSet(Hex(VarA, #PB_Ascii), 2, "0")+" -> 0x"+RSet(Hex(NibbleSwapA(VarA), #PB_Ascii), 2, "0")
-	Debug StrU(VarA, #PB_Ascii)+" -> "+StrU(NibbleSwapA(VarA), #PB_Ascii)
-	Debug ""
-	
-	Define VarW.w = $B903
-	Debug "Word:"
-	Debug "0x"+RSet(Hex(VarW, #PB_Word), 4, "0")+" -> 0x"+RSet(Hex(EndianSwapW(VarW), #PB_Word), 4, "0")
-	Debug Str(VarW)+" -> "+Str(EndianSwapW(VarW))
-	Debug ""
-	
-	Define VarU.w = $B903
-	Debug "Unicode:"
-	Debug "0x"+RSet(Hex(VarU, #PB_Unicode), 4, "0")+" -> 0x"+RSet(Hex(EndianSwapU(VarU), #PB_Unicode), 4, "0")
-	Debug StrU(VarU, #PB_Unicode)+" -> "+StrU(EndianSwapU(VarU), #PB_Unicode)
-	Debug ""
-	
-	Define VarL.l = $E530A6F0
-	Debug "Long:"
-	Debug "0x"+RSet(Hex(VarL, #PB_Long), 8, "0")+" -> 0x"+RSet(Hex(EndianSwapL(VarL), #PB_Long), 8, "0")
-	Debug Str(VarL)+" -> "+Str(EndianSwapL(VarL))
-	Debug ""
-	
-	Debug "Integer:"
-	CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
-		Define VarI.i = $E530A6F0
-		
-		Debug "> 32 bits"
-		Debug "0x"+RSet(Hex(VarI, #PB_Long), 8, "0")+" -> 0x"+RSet(Hex(EndianSwapL(VarI), #PB_Long), 8, "0")
-		Debug Str(VarI)+" -> "+Str(EndianSwapL(VarI))
-		Debug "> 64 bits"
-		Debug "Use a 64 bits compiler or EndianSwapQ(...)"
-		
-	CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
-		Define VarI.i = $D34A096BD100F590
-		
-		Debug "> 32 bits"
-		Debug "Use a 32 bits compiler or EndianSwapL(...)"
-		Debug "> 64 bits"
-		Debug "0x"+RSet(Hex(VarI, #PB_Quad), 16, "0")+" -> 0x"+RSet(Hex(EndianSwapI(VarI), #PB_Quad), 16, "0")
-		Debug Str(VarI)+" -> "+Str(EndianSwapI(VarI))
-		
-	CompilerElse
-		CompilerWarning "> Unsupported CPU Architecture for both x86 and x64."
-	CompilerEndIf
-	Debug ""
-		
-	Debug "Quad:"
-	Define VarQ.q = $D34A096BD100F590
-	CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
-		
-		Debug "> 32 bits method (x86 fallback)"
-		Debug "0x"+RSet(Hex(VarQ, #PB_Quad), 16, "0")+" -> 0x"+RSet(Hex(EndianSwapQ(VarQ), #PB_Quad), 16, "0")
-		Debug Str(VarQ)+" -> "+Str(EndianSwapQ(VarQ))
-		Debug "> 64 bits method (???)"
-		Debug "Use a 64 bits compiler"
-		
-	CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
-		
-		Debug "> 32 bits method (x86 fallback)"
-		Debug "Use a 32 bits compiler"
-		Debug "> 64 bits method (???)"
-		Debug "0x"+RSet(Hex(VarQ, #PB_Quad), 16, "0")+" -> 0x"+RSet(Hex(EndianSwapQ(VarQ), #PB_Quad), 16, "0")
-		Debug Str(VarQ)+" -> "+Str(EndianSwapQ(VarQ))
-		
-	CompilerElse
-		CompilerWarning "> Unsupported CPU Architecture for both x86 and x64."
-	CompilerEndIf
-CompilerEndIf
-
-;}
-
-; IDE Options = PureBasic 5.70 LTS (Windows - x64)
-; CursorPosition = 4
-; Folding = ----
-; EnableXP
-; Compiler = PureBasic 5.62 (Windows - x86)
