@@ -1,7 +1,7 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: BasicTernary.pbi
-;      Version: 1.0.0
+;      Version: 1.1.0
 ;       Author: Herwin Bozet
 ;  Create date: 22 October 2017, 04:37:04
 ; 
@@ -86,11 +86,11 @@ Procedure.l IfL(Condition.b, TrueValue.l, FalseValue.l)
 	EndIf
 EndProcedure
 
-Procedure IfP(Condition.b, *TrueValue, *FalseValue)
+Procedure.i IfP(Condition.b, *TrueValue, *FalseValue)
 	If Condition
-		ProcedureReturn TrueValue
+		ProcedureReturn *TrueValue
 	Else
-		ProcedureReturn FalseValue
+		ProcedureReturn *FalseValue
 	EndIf
 EndProcedure
 
@@ -127,8 +127,3 @@ Procedure.w IfW(Condition.b, TrueValue.w, FalseValue.w)
 EndProcedure
 
 ;}
-
-; IDE Options = PureBasic 5.70 LTS (Windows - x64)
-; CursorPosition = 22
-; Folding = FA5
-; EnableXP
