@@ -1,7 +1,7 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: Colors.pbi
-;      Version: 1.0.0
+;      Version: 1.1.0
 ;       Author: Herwin Bozet
 ;  Create date: 24 February 2018, 23:36:09
 ; 
@@ -33,12 +33,12 @@
 
 ; Might get changed to _RGBHex if a helper procedure is introduced later.
 Macro RGBHex(Color)
-	(Color >> 16) + ((Color >> 8) & 255) * 256 + (Color & 255) * 65536
+	(Color >> 16) | (((Color >> 8) & $FF) << 8) | ((Color & $FF) << 16)
 EndMacro
 
 ; Might get changed to _RGBAHex if a helper procedure is introduced later.
 Macro RGBAHex(Color)
-	(Color >> 24) + ((Color >> 16) & 255) * 256 + ((Color >> 8) & 255) * 65536 + (Color & 255) * 16777216
+	((Color >> 24) & $FF) | (((Color >> 16) & $FF) << 8) | (((Color >> 8) & $FF) << 16) | ((Color & $FF) << 24)
 EndMacro
 
 ;}
@@ -284,12 +284,3 @@ EndMacro
 #COLOR_MSC_PETA = RGBHex($BEEEEF)
 
 ;}
-
-; IDE Options = PureBasic 5.70 LTS (Windows - x64)
-; CursorPosition = 41
-; FirstLine = 36
-; Folding = --
-; EnableXP
-; CompileSourceDirectory
-; EnableCompileCount = 29
-; EnableBuildCount = 0
