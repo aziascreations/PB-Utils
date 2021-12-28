@@ -17,7 +17,7 @@
 ;{
 
 EnableExplicit
-XIncludeFile "../Includes/UnitTest-Basic.pbi"
+XIncludeFile "../Includes/UnitTest.pbi"
 XIncludeFile "../Includes/Colors.pbi"
 
 ;}

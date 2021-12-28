@@ -1,7 +1,7 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: UnitTest-Basic.pbi
-;      Version: 1.1.0
+;      Version: 2.0.0
 ;       Author: Herwin Bozet & Demivec
 ;  Create date: 27 October 2017, 01:25:46
 ; 
@@ -17,18 +17,15 @@
 ; 
 ;}
 
-;TODO?: Add a EndUnitTesting procedure that prints the number of failed and passed tests
 
-;
-;- Compiler Options
+;- Notes
 ;{
 
-; The following line is only use to see if it works with it and for debugging
-;EnableExplicit
+; None
 
 ;}
 
-;
+
 ;- Variables & Constants
 ;{
 
@@ -37,25 +34,31 @@ Global FailedUnitTests.i = 0
 
 ;}
 
-;
+
 ;- Procedures
 ;{
 
-Procedure Pass(TestName.s="")
+Procedure Pass(TestName.s="", Reason.s="")
 	PassedUnitTests = PassedUnitTests + 1
 	If Len(TestName)
 		Debug "Passed -> "+TestName
 	Else
 		Debug "Passed"
 	EndIf
+	If Len(Reason)
+		Debug "|_> "+Reason
+	EndIf
 EndProcedure
 
-Procedure Fail(TestName.s="")
+Procedure Fail(TestName.s="", Reason.s="")
 	FailedUnitTests = FailedUnitTests + 1
 	If Len(TestName)
 		Debug "Failed -> "+TestName
 	Else
 		Debug "Failed"
+	EndIf
+	If Len(Reason)
+		Debug "|_> "+Reason
 	EndIf
 EndProcedure
 
@@ -75,14 +78,24 @@ Procedure AssertFalse(Bool.b=#False, TestName.s="")
 	EndIf
 EndProcedure
 
+Procedure AssertEqual(Value1, Value2, TestName.s="")
+	AssertTrue(Bool(Value1 = Value2), TestName)
+EndProcedure
+
+Procedure AssertNotEqual(Value1, Value2, TestName.s="")
+	AssertTrue(Bool(Value1 <> Value2), TestName)
+EndProcedure
+
+Procedure AssertBitwiseEqual(Value1, Value2, TestName.s="")
+	AssertTrue(Bool(Value1 ! Value2 = 0), TestName)
+EndProcedure
+
+Procedure AssertBitwiseNotEqual(Value1, Value2, TestName.s="")
+	AssertTrue(Bool(Value1 ! Value2 <> 0), TestName)
+EndProcedure
+
 Procedure Assert(Bool.b, TestName.s="")
 	AssertTrue(Bool, TestName)
 EndProcedure
 
 ;}
-
-; IDE Options = PureBasic 5.62 (Windows - x64)
-; CursorPosition = 16
-; Folding = --
-; EnableXP
-; CompileSourceDirectory
