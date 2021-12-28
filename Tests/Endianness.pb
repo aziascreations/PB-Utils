@@ -29,6 +29,7 @@ XIncludeFile "../Includes/Endianness.pbi"
 ;- > Remarks()
 Debug "-=# Remarks #=-"
 Debug " * Implicit types will only be tested when signed types are used !"
+Debug " * This test should be compiled for x86 and x64 to insure both of the compilers work properly !"
 Debug ""
 
 
@@ -119,52 +120,68 @@ AssertEqual(LongOutput, EndianSwapL(LongInput), "Numeric equality on typed varia
 AssertBitwiseEqual(LongOutput, EndianSwapL(LongInput), "Bitwise equality on typed variables")
 Debug ""
 
-; 	Debug "Integer:"
-; 	CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
-; 		Define VarI.i = $E530A6F0
-; 		
-; 		Debug "> 32 bits"
-; 		Debug "0x"+RSet(Hex(VarI, #PB_Long), 8, "0")+" -> 0x"+RSet(Hex(EndianSwapL(VarI), #PB_Long), 8, "0")
-; 		Debug Str(VarI)+" -> "+Str(EndianSwapL(VarI))
-; 		Debug "> 64 bits"
-; 		Debug "Use a 64 bits compiler or EndianSwapQ(...)"
-; 		
-; 	CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
-; 		Define VarI.i = $D34A096BD100F590
-; 		
-; 		Debug "> 32 bits"
-; 		Debug "Use a 32 bits compiler or EndianSwapL(...)"
-; 		Debug "> 64 bits"
-; 		Debug "0x"+RSet(Hex(VarI, #PB_Quad), 16, "0")+" -> 0x"+RSet(Hex(EndianSwapI(VarI), #PB_Quad), 16, "0")
-; 		Debug Str(VarI)+" -> "+Str(EndianSwapI(VarI))
-; 		
-; 	CompilerElse
-; 		CompilerWarning "> Unsupported CPU Architecture for both x86 and x64."
-; 	CompilerEndIf
-; 	Debug ""
-; 		
-; 	Debug "Quad:"
-; 	Define VarQ.q = $D34A096BD100F590
-; 	CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
-; 		
-; 		Debug "> 32 bits method (x86 fallback)"
-; 		Debug "0x"+RSet(Hex(VarQ, #PB_Quad), 16, "0")+" -> 0x"+RSet(Hex(EndianSwapQ(VarQ), #PB_Quad), 16, "0")
-; 		Debug Str(VarQ)+" -> "+Str(EndianSwapQ(VarQ))
-; 		Debug "> 64 bits method (???)"
-; 		Debug "Use a 64 bits compiler"
-; 		
-; 	CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
-; 		
-; 		Debug "> 32 bits method (x86 fallback)"
-; 		Debug "Use a 32 bits compiler"
-; 		Debug "> 64 bits method (???)"
-; 		Debug "0x"+RSet(Hex(VarQ, #PB_Quad), 16, "0")+" -> 0x"+RSet(Hex(EndianSwapQ(VarQ), #PB_Quad), 16, "0")
-; 		Debug Str(VarQ)+" -> "+Str(EndianSwapQ(VarQ))
-; 		
-; 	CompilerElse
-; 		CompilerWarning "> Unsupported CPU Architecture for both x86 and x64."
-; 	CompilerEndIf
-; CompilerEndIf
+
+;- > EndianSwapI()
+Define IntInput.i, IntOutput.i
+
+Debug "-=# Testing 'EndianSwapI()' with sign bit #=-"
+CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
+	IntInput = $89ABCDEF
+	IntOutput = $EFCDAB89
+	AssertEqual($EFCDAB89, EndianSwapI($89ABCDEF), "Numeric equality on direct values")
+	AssertBitwiseEqual($EFCDAB89, EndianSwapI($89ABCDEF), "Bitwise equality on direct values")
+	AssertEqual(IntOutput, EndianSwapI(IntInput), "Numeric equality on typed variables")
+	AssertBitwiseEqual(IntOutput, EndianSwapI(IntInput), "Bitwise equality on typed variables")
+CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
+	IntInput = $D34A096BD100F590
+	IntOutput = $90F500D16B094AD3
+	AssertEqual($90F500D16B094AD3, EndianSwapI($D34A096BD100F590), "Numeric equality on direct values")
+	AssertBitwiseEqual($90F500D16B094AD3, EndianSwapI($D34A096BD100F590), "Bitwise equality on direct values")
+	AssertEqual(IntOutput, EndianSwapI(IntInput), "Numeric equality on typed variables")
+	AssertBitwiseEqual(IntOutput, EndianSwapI(IntInput), "Bitwise equality on typed variables")
+CompilerEndIf
+Debug ""
+
+Debug "-=# Testing 'EndianSwapI()' without sign bit #=-"
+CompilerIf #PB_Compiler_Processor = #PB_Processor_x86
+	IntInput = $1A2B3C4D
+	LongOutput = $4D3C2B1A
+	AssertEqual($4D3C2B1A, EndianSwapI($1A2B3C4D), "Numeric equality on direct values")
+	AssertBitwiseEqual($4D3C2B1A, EndianSwapI($1A2B3C4D), "Bitwise equality on direct values")
+	AssertEqual(LongOutput, EndianSwapI(IntInput), "Numeric equality on typed variables")
+	AssertBitwiseEqual(LongOutput, EndianSwapI(IntInput), "Bitwise equality on typed variables")
+CompilerElseIf #PB_Compiler_Processor = #PB_Processor_x64
+	IntInput = $D34A096BD100F540
+	IntOutput = $40F500D16B094AD3
+	AssertEqual($40F500D16B094AD3, EndianSwapI($D34A096BD100F540), "Numeric equality on direct values")
+	AssertBitwiseEqual($40F500D16B094AD3, EndianSwapI($D34A096BD100F540), "Bitwise equality on direct values")
+	AssertEqual(IntOutput, EndianSwapI(IntInput), "Numeric equality on typed variables")
+	AssertBitwiseEqual(IntOutput, EndianSwapI(IntInput), "Bitwise equality on typed variables")
+CompilerEndIf
+Debug ""
+
+
+;- > EndianSwapQ()
+Define QuadInput.q, QuadOutput.q
+
+Debug "-=# Testing 'EndianSwapQ()' with sign bit #=-"
+QuadInput = $D34A096BD100F590
+QuadOutput = $90F500D16B094AD3
+AssertEqual($90F500D16B094AD3, EndianSwapQ($D34A096BD100F590), "Numeric equality on direct values")
+AssertBitwiseEqual($90F500D16B094AD3, EndianSwapQ($D34A096BD100F590), "Bitwise equality on direct values")
+AssertEqual(QuadOutput, EndianSwapQ(QuadInput), "Numeric equality on typed variables")
+AssertBitwiseEqual(QuadOutput, EndianSwapQ(QuadInput), "Bitwise equality on typed variables")
+Debug ""
+
+Debug "-=# Testing 'EndianSwapQ()' without sign bit #=-"
+QuadInput = $D34A096BD100F540
+QuadOutput = $40F500D16B094AD3
+AssertEqual($40F500D16B094AD3, EndianSwapQ($D34A096BD100F540), "Numeric equality on direct values")
+AssertBitwiseEqual($40F500D16B094AD3, EndianSwapQ($D34A096BD100F540), "Bitwise equality on direct values")
+AssertEqual(QuadOutput, EndianSwapQ(QuadInput), "Numeric equality on typed variables")
+AssertBitwiseEqual(QuadOutput, EndianSwapQ(QuadInput), "Bitwise equality on typed variables")
+Debug ""
+
 
 ;- > Results
 Debug "-=# Results #=-"
