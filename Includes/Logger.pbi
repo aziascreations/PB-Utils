@@ -224,9 +224,3 @@ CompilerIf #PB_Compiler_IsMainFile
 	; TODO: Add an example here
 CompilerEndIf
 ;}
-
-; IDE Options = PureBasic 5.62 (Windows - x64)
-; CursorPosition = 17
-; Folding = fEOw-
-; EnableXP
-; CompileSourceDirectory

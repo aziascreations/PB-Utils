@@ -102,9 +102,3 @@ CompilerIf #PB_Compiler_IsMainFile
 CompilerEndIf
 
 ;}
-
-; IDE Options = PureBasic 5.70 LTS (Windows - x64)
-; CursorPosition = 28
-; FirstLine = 15
-; Folding = --
-; CompileSourceDirectory

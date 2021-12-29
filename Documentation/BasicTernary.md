@@ -1,17 +1,16 @@
 # BasicTernary
 
-This include provides you with a set of procedures that act as a sort of ternary operator that allow [you to ...].
+This include provides you with a set of procedures that act as a sort of ternary operator that allow you to make some of you code more readable and reduce the amount of lines of code present in your files.
 
-[It is mostly helpful to save on line count]
-
-[💾 <sub>Source Code</sub>](../Includes/BasicTernary.pbi)
+[💾 <sub>Include</sub>](../Includes/BasicTernary.pbi)<br>
+[🧱 <sub>Module</sub>](../Modules/BasicTernary.pbi)
 
 
 ## Remarks
 
-Due to the fact that the procedure listed below [need to be called as procedures], their use in a big loop may potentially hinder performances due to the fact [there is a fct/proc/routine called issued each and every time].
+Due to the fact that the procedures contained in this include aren't implemented as macros, their use in a big loop may potentially hinder performances due to the repeated subroutine jumps.
 
-A macro could have had better performances if it had been rediced to a simple if/else condition, but it wouldn't have been as versatile as proper procedures.
+A macro would have had better performances, but it couldn't be implemented cleanly.
 
 
 ## Procedures
@@ -40,9 +39,9 @@ A macro could have had better performances if it had been rediced to a simple if
 
 `IfW(Condition.b, TrueValue.w, FalseValue.w).w`
 
-&emsp;Each and everyone of these procedures will either return the given `TrueValue` or `FalseValue` depending on wether or not the boolean `Condition` is true or false.
+&emsp;Each of these procedures will either return the given `TrueValue` or `FalseValue` depending on wether or not the boolean `Condition` is true or false.
 
-&emsp;For the parameter `Condition.b`, you have to wrap your condition in a `Bool()` [call] to make sure it is passed as a boolean.
+&emsp;For the parameter `Condition.b`, you have to wrap your condition in a `Bool()` statement to make sure it is passed as a boolean.
 
 
 ## Example
@@ -54,12 +53,12 @@ XincludeFile "BasicTernary.pbi"
 
 x = 1 : y = 2 
 
-Debug IfS(Bool(x>y), "X is bigger than Y", "X isn't bigger than Y")
+Debug IfS(Bool(x > y), "X is bigger than Y", "X isn't bigger than Y")
 ```
 
 Gives the same result as this one in java
 ```java
 int x=1, y=2;
 
-System.out.println((x>y ? "X is bigger than Y" : "X isn't bigger than Y"));
+System.out.println((x > y ? "X is bigger than Y" : "X isn't bigger than Y"));
 ```

@@ -119,12 +119,3 @@ CompilerIf #PB_Compiler_IsMainFile
 CompilerEndIf
 
 ;}
-
-; IDE Options = PureBasic 5.62 (Windows - x64)
-; CursorPosition = 21
-; FirstLine = 16
-; Folding = --
-; EnableXP
-; CompileSourceDirectory
-; EnableCompileCount = 3
-; EnableBuildCount = 0
