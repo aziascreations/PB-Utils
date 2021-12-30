@@ -1,14 +1,13 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
-;         Name: Endianness.pbi
-;      Version: 1.1.0
+;         Name: Endianness.pbi (Include)
+;      Version: 3.0.0 - Common to all "PB-Utils" Includes
 ;       Author: Herwin Bozet
-;  Create date: 9 June 2019, 21:04:51
 ; 
 ;  Description: A set of procedure that allow you to swap the endianness of a variable easily.
 ; 
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.62-5.70 (x86/x64)
+;  Compiler version: PureBasic 5.70 (x86/x64) (Other versions untested)
 ;  Operating system: Windows (Other platforms untested)
 ; 
 ; ==- Credits -===================================
@@ -18,9 +17,9 @@
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://github.com/aziascreations/PB-Utils/Documentation/Endianness
-;  License: WTFPL
+;  License: Unlicensed
 ; 
-; ==- Documentation -=============================
+; ==- Documentation Remarks -=====================
 ;  See each procedures for a link to the relevant x86/x64 ASM instruction(s).
 ;  + desc, and link back to the readme in the repo.
 ;

@@ -1,20 +1,19 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
-;         Name: Colors.pbi
-;      Version: 1.1.0
+;         Name: Colors.pbi (Include)
+;      Version: 3.0.0 - Common to all "PB-Utils" Includes
 ;       Author: Herwin Bozet
-;  Create date: 24 February 2018, 23:36:09
 ; 
 ;  Description: Collection of 24bit colors constants and color related macros.
 ; 
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.60-5.70 (x86/x64)
+;  Compiler version: PureBasic 5.70 (x86/x64) (Other versions untested)
 ;  Operating system: Windows (Other platforms untested)
 ; 
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://github.com/aziascreations/PB-Utils/Documentation/Colors
-;  License: WTFPL
+;  License: Unlicensed
 ; 
 ;}
 
@@ -246,32 +245,6 @@ EndMacro
 #COLOR_Metro_Red = RGBHex($EE1111)
 #COLOR_Metro_DarkRed = RGBHex($B91D47)
 #COLOR_Metro_White = RGBHex($FFFFFF)
-
-;}
-
-
-;- Colors - Shades of black (unused)
-;{
-
-; #COLOR_Grey_5  = RGBHex($0D0D0D) ; Rounded up from #C.C (12.75)
-; #COLOR_Grey_10 = RGBHex($1A1A1A) ; Rounded up from #19.8 (25.5)
-; #COLOR_Grey_15 = RGBHex($262626) ; Rounded down from #26.4 (38.25)
-; #COLOR_Grey_20 = RGBHex($) ; 
-; #COLOR_Grey_25 = RGBHex($) ; 
-; #COLOR_Grey_30 = RGBHex($) ; 
-; #COLOR_Grey_35 = RGBHex($) ; 
-; #COLOR_Grey_40 = RGBHex($) ; 
-; #COLOR_Grey_45 = RGBHex($) ; 
-; #COLOR_Grey_50 = RGBHex($7F7F7F)
-; #COLOR_Grey_55 = RGBHex($) ; 
-; #COLOR_Grey_60 = RGBHex($) ; 
-; #COLOR_Grey_65 = RGBHex($) ; 
-; #COLOR_Grey_70 = RGBHex($) ; 
-; #COLOR_Grey_75 = RGBHex($) ; 
-; #COLOR_Grey_80 = RGBHex($) ; 
-; #COLOR_Grey_85 = RGBHex($) ; 
-; #COLOR_Grey_90 = RGBHex($) ; 
-; #COLOR_Grey_95 = RGBHex($) ; 
 
 ;}
 

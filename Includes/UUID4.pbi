@@ -1,20 +1,19 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: UUID4.pbi
-;      Version: 2.0.0
+;      Version: 3.0.0 - Common to all "PB-Utils" Includes
 ;       Author: Herwin Bozet
-;  Create date: 22 October 2017, 15:46:05
 ;
 ;  Description: ???
-;
+; 
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Compiler version: PureBasic 5.70 (x86/x64) (Other versions untested)
 ;  Operating system: Windows (Other platforms untested)
 ;
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://github.com/aziascreations/PB-Utils/wiki/UUID4
-;  License: WTFPL
+;  License: Unlicensed
 ;
 ;}
 
@@ -84,38 +83,5 @@ EndProcedure
 Procedure IsUUID4Compliant(uuid4$)
 	ProcedureReturn MatchRegularExpression(#REGEX_ID_UUID4, uuid4$)
 EndProcedure
-
-;}
-
-;
-;- Unit Tests & Examples
-;{
-
-CompilerIf #PB_Compiler_IsMainFile
-	Define i.i
-
-	XIncludeFile "UnitTest-Basic.pb"
-
-	Debug "Unit tests -> "+Chr(34)+#PB_Compiler_Filename+Chr(34)
-	Debug ""
-
-	Debug "> GenerateUUID4()"
-	For i=0 To 5
-		Debug GenerateUUID4()
-	Next
-	Pass("UUID Generation")
-	Debug ""
-
-	If FailedUnitTests
-		Debug "ERROR: The ability to generate UUID4 string is required for the other unit tests"
-		End 1
-	EndIf
-
-	Debug "> IsUUID4Compliant(uuid4$)"
-	Assert(IsUUID4Compliant(GenerateUUID4()), "UUID4 validity check")
-	Debug ""
-
-	Debug "-- "+PassedUnitTests+" passed - "+FailedUnitTests+" failed --"
-CompilerEndIf
 
 ;}

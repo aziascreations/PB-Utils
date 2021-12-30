@@ -1,20 +1,19 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
-;         Name: BasicTernary.pbi
-;      Version: 1.1.0
+;         Name: BasicTernary.pbi (Include)
+;      Version: 3.0.0 - Common to all "PB-Utils" Includes
 ;       Author: Herwin Bozet
-;  Create date: 22 October 2017, 04:37:04
 ; 
 ;  Description: Gives a procedure that acts like the ternary operator in other languages.
 ; 
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.62-5.70 (x86/x64)
+;  Compiler version: PureBasic 5.70 (x86/x64) (Other versions untested)
 ;  Operating system: Windows (Other platforms untested)
 ; 
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://github.com/aziascreations/PB-Utils/Documentation/BasicTernary
-;  License: WTFPL
+;  License: Unlicensed
 ; 
 ;}
 

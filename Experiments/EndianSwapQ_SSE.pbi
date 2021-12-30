@@ -3,19 +3,18 @@
 ;         Name: EndianSwapQ_SSE.pbi
 ;      Version: 1.0.0 (Experimental)
 ;       Author: Herwin Bozet
-;  Create date: 11 January 2020, 08:33:48
 ; 
 ;  Description: An experimental version of "EndianSwapQ" from "Endianness.pbi" that
 ;                uses the SSE2 instruction set.
 ; 
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.70 (x64) (Other versions untested)
+;  Compiler version: PureBasic 5.70 (x86/x64) (Other versions untested)
 ;  Operating system: Windows (Other platforms untested)
 ; 
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://github.com/aziascreations/PB-Utils/Documentation/Endianness
-;  License: WTFPL
+;  License: Unlicensed
 ; 
 ;}
 

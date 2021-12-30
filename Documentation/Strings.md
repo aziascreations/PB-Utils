@@ -1,10 +1,10 @@
 # Strings
 
-This includes provides you with a couple of procedures [...]
+This includes provides you with a couple of procedures that can help you
+manipulate string more easily in some cases that aren't directly supported
+by PureBasic.
 
-[use cases]
-
-[💾 <sub>Source Code</sub>](../Includes/Strings.pbi)
+[💾 <sub>Include</sub>](../Includes/Strings.pbi)
 
 
 ## Remarks

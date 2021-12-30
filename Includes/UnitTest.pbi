@@ -1,19 +1,18 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: UnitTest-Basic.pbi
-;      Version: 2.0.0
-;       Author: Herwin Bozet & Demivec
-;  Create date: 27 October 2017, 01:25:46
+;      Version: 3.0.0 - Common to all "PB-Utils" Includes
+;       Author: Herwin Bozet
 ; 
 ;  Description: ???
 ; 
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.60-5.62 (x64) (Other versions untested)
+;  Compiler version: PureBasic 5.70 (x86/x64) (Other versions untested)
 ;  Operating system: Windows (Other platforms untested)
 ; 
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
-;  License: WTFPL
+;  License: Unlicensed
 ; 
 ;}
 

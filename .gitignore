@@ -6,5 +6,6 @@
 PureBasic_Compilation*
 
 # Personnal Files
+.idea/
 trash/
 *.md.cfg

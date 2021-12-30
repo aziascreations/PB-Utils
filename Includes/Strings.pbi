@@ -1,20 +1,19 @@
 ﻿;{- Code Header
 ; ==- Basic Info -================================
 ;         Name: Strings.pbi
-;      Version: 2.0.0
+;      Version: 3.0.0 - Common to all "PB-Utils" Includes
 ;       Author: Herwin Bozet
-;  Create date: 22 October 2017, 04:37:04
 ;
-;  Description: ???
-;
+;  Description: Contains a set of procedures to manipulate string more easily if you need to.
+; 
 ; ==- Compatibility -=============================
-;  Compiler version: PureBasic 5.62-5.70 (x86/x64)
+;  Compiler version: PureBasic 5.70 (x86/x64) (Other versions untested)
 ;  Operating system: Windows (Other platforms untested)
 ;
 ; ==- Links & License -===========================
 ;   Github: https://github.com/aziascreations/PB-Utils
 ;     Doc.: https://github.com/aziascreations/PB-Utils/Documentation/Strings
-;  License: WTFPL
+;  License: Unlicensed
 ;
 ;}
 
@@ -53,6 +52,7 @@ Procedure.q SplitArrayToString(Array A$(1), StringToSplit$, Delimeter$, CleanStr
 	ProcedureReturn DelimiterCount + 1
 EndProcedure
 
+
 ; Returns nonzero if A$ is equal to #Null$ or is filled with spaces.
 Procedure.b IsNullOrEmpty(A$)
 	ProcedureReturn Bool(Trim(A$) = #Null$)
@@ -77,6 +77,7 @@ Procedure.s CommonPrefix(A$, B$)
 	
 	ProcedureReturn Left(A$, PrefixIndex - 1)
 EndProcedure
+
 
 ; Returns the length of the largest common prefix in the given A$ and B$ strings.
 Procedure.q CommonPrefixLength(A$, B$)

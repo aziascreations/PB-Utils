@@ -1,16 +1,15 @@
 # UUID4
+Contains a set of procedures to generate UUID4 strings and to validate them.
 
-[DESC]
+A procedure to generate it directly into a buffer is also planned.
 
-[USE CASE]
-
-[💾 <sub>Source Code</sub>](../Includes/UUID4.pbi)
+[💾 <sub>Include</sub>](../Includes/UUID4.pbi)
 
 
 ## Remarks
 
 No constants or enumeration identifiers were used in this include.<br>
-However, keep in mind that some older versions<sub>(<2.0.0)</sub> used to have some.
+However, keep in mind that version prior to v2.0.0 used to have some.
 
 
 ## Procedures

@@ -1,21 +1,24 @@
 # Colors
+This include contains a collection of 24bit colors constants and color related macros.
 
-???
-
-[💾 <sub>Source Code</sub>](../Includes/Colors.pbi)
-
+**Links:**<br>
+&nbsp;&nbsp;[💾 <sub>Include</sub>](../Includes/Colors.pbi)<br>
+&nbsp;&nbsp;[🧱 <sub>Module</sub>](../Modules/Colors.pbi)
 
 ## Summary
-
 &emsp;● [Macros](#macros)<br>
 &emsp;● [Colors](#colors)<br>
 &emsp;&emsp;⚬ [CSS 3](#css-3)<br>
 &emsp;&emsp;⚬ [Metro UI](#metro-ui)<br>
 &emsp;&emsp;⚬ [Misc](#misc)<br>
 
+## Module
+The module version of this include uses the `Colors` name.
+
+Some constants are also provided in order to help you check the version number of the module itself:
+&nbsp;&nbsp;`#Version$`, `#Version_Major`, `#Version_Minor` and `#Version_Patch`
 
 ## Macros
-
 ???
 
 

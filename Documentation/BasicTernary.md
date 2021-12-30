@@ -1,20 +1,22 @@
 # BasicTernary
-
 This include provides you with a set of procedures that act as a sort of ternary operator that allow you to make some of you code more readable and reduce the amount of lines of code present in your files.
 
-[💾 <sub>Include</sub>](../Includes/BasicTernary.pbi)<br>
-[🧱 <sub>Module</sub>](../Modules/BasicTernary.pbi)
-
+**Links:**<br>
+&nbsp;&nbsp;[💾 <sub>Include</sub>](../Includes/BasicTernary.pbi)<br>
+&nbsp;&nbsp;[🧱 <sub>Module</sub>](../Modules/BasicTernary.pbi)
 
 ## Remarks
-
 Due to the fact that the procedures contained in this include aren't implemented as macros, their use in a big loop may potentially hinder performances due to the repeated subroutine jumps.
 
 A macro would have had better performances, but it couldn't be implemented cleanly.
 
+## Module
+The module version of this include uses the `BasicTernary` name.
+
+Some constants are also provided in order to help you check the version number of the module itself:
+&nbsp;&nbsp;`#Version$`, `#Version_Major`, `#Version_Minor` and `#Version_Patch`
 
 ## Procedures
-
 `IfA(Condition.b, TrueValue.a, FalseValue.a).a`
 
 `IfB(Condition.b, TrueValue.b, FalseValue.b).b`
@@ -43,11 +45,8 @@ A macro would have had better performances, but it couldn't be implemented clean
 
 &emsp;For the parameter `Condition.b`, you have to wrap your condition in a `Bool()` statement to make sure it is passed as a boolean.
 
-
 ## Example
-
 This piece of code in PureBasic
-
 ```ruby
 XincludeFile "BasicTernary.pbi"
 
